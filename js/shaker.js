@@ -28,13 +28,15 @@ shakerMain.prototype = {
         circle.y = HEIGHT / 2 - circle.height / 2;
 
         circle.body.collideWorldBounds = true;
+        
+        navigator.accelerometer.watchAcceleration(deviceMotion, onError);
 
-		if (window.DeviceMotionEvent) {
+		/*if (window.DeviceMotionEvent) {
 		  	window.addEventListener('devicemotion', deviceMotion);
 		}
 		else{
 			alert('motion not supported');
-		}
+		}*/
     },
     
     update: function(){
@@ -58,8 +60,8 @@ shakerMain.prototype = {
 	}
 };
 
-function deviceMotion(event){
-	accelX = event.acceleration.x;
+function deviceMotion(acceleration){
+	accelX = acceleration.x;
     circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 4.75);
 }
 
@@ -91,4 +93,8 @@ function flash(_color){
 		circle.tint = 0xffffff;
 		game.stage.backgroundColor = '#000000';
 	}, 120);
+}
+
+function onError(){
+	alert('error');
 }

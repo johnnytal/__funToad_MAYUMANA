@@ -25,32 +25,34 @@ function readVisherAccel(acceleration){
 		
 		angleText.text = visherAccelX;
 		
-		if (visherAccelX < -(GO_NUM) && !sound2.isPlaying && resetSounds){
-			resetSounds = false;
-			sound2.play();
-			window.plugins.flashlight.switchOn();
-			
-			setTimeout(function(){
-				window.plugins.flashlight.switchOff();
-			}, 150);
-			
-			game.stage.backgroundColor = '#ff00ff';
-			navigator.vibrate(100);
-		}
-		else if (visherAccelX > GO_NUM && !sound1.isPlaying && resetSounds){
-			resetSounds = false;
-			sound1.play();
-			window.plugins.flashlight.switchOn();
-			
-			setTimeout(function(){
-				window.plugins.flashlight.switchOff();
-			}, 150);
-			
-			game.stage.backgroundColor = '#f0ff0f';
-			navigator.vibrate(100);
+		if (resetSounds){
+			if (visherAccelX < -(GO_NUM) && !sound2.isPlaying){
+				resetSounds = false;
+				sound2.play();
+				window.plugins.flashlight.switchOn();
+				
+				setTimeout(function(){
+					window.plugins.flashlight.switchOff();
+				}, 150);
+				
+				game.stage.backgroundColor = '#ff00ff';
+				navigator.vibrate(100);
+			}
+			else if (visherAccelX > GO_NUM && !sound1.isPlaying){
+				resetSounds = false;
+				sound1.play();
+				window.plugins.flashlight.switchOn();
+				
+				setTimeout(function(){
+					window.plugins.flashlight.switchOff();
+				}, 150);
+				
+				game.stage.backgroundColor = '#f0ff0f';
+				navigator.vibrate(100);
+			}
 		}
 		
-		else if (visherAccelX < Math.floor(GO_NUM / 3) && visherAccelX > -(Math.floor(GO_NUM / 3))){
+		if (visherAccelX < 2 && visherAccelX > -2 && !resetSounds){
 			setTimeout(function(){
 				resetSounds = true;
 				game.stage.backgroundColor = '#000000';
