@@ -30,38 +30,38 @@ shakerMain.prototype = {
  
         circle.body.collideWorldBounds = true;
 
-		if (game.state.getCurrentState().key == 'Shaker'){
-			if (window.DeviceMotionEvent) {
-			  	window.addEventListener('devicemotion', deviceMotion);
-			}
-			else{
-				alert('motion not supported');
-			}
-			
-			if (window.DeviceOrientationEvent) {
-				window.addEventListener('deviceorientation', handleOrientation);
-			}
-			else{
-				alert('orientation not supported');
-			}
+		if (window.DeviceMotionEvent) {
+		  	window.addEventListener('devicemotion', deviceMotion);
+		}
+		else{
+			alert('motion not supported');
+		}
+		
+		if (window.DeviceOrientationEvent) {
+			window.addEventListener('deviceorientation', handleOrientation);
+		}
+		else{
+			alert('orientation not supported');
 		}
     },
     
     update: function(){
-    	if (circle.y > 22 && circle.y < HEIGHT - circle.height - 22){
-    		resetTouching = true;
-    	}
-    	
-    	if (resetTouching){    	
-	    	if (circle.y == 0){ // front
-	    		window.plugins.NativeAudio.play('frontSfx');
-				flash(GENTLE_COLOR);	
-    		}
+    	if (game.state.getCurrentState().key == 'Shaker'){
+	    	if (circle.y > 22 && circle.y < HEIGHT - circle.height - 22){
+	    		resetTouching = true;
+	    	}
 	    	
-	    	else if (circle.y == HEIGHT - circle.height){ // back    		
-    			window.plugins.NativeAudio.play('backSfx');
-				flash(BACK_COLOR);
-			}	
+	    	if (resetTouching){    	
+		    	if (circle.y == 0){ // front
+		    		window.plugins.NativeAudio.play('frontSfx');
+					flash(GENTLE_COLOR);	
+	    		}
+		    	
+		    	else if (circle.y == HEIGHT - circle.height){ // back    		
+	    			window.plugins.NativeAudio.play('backSfx');
+					flash(BACK_COLOR);
+				}	
+	    	}
     	}
 	}
 };
@@ -83,19 +83,20 @@ function flash(_color){
 	
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
-		circle.tint = 0xf45002;
+		circle.tint = 0xff00ff;
 		navigator.vibrate(200);
 	}
 	else{
-		circle.tint = 0xf45002;
+		circle.tint = 0xff00ff;
 		navigator.vibrate(100);
 	}
 
 	setTimeout(function(){
 		if (window.plugins.flashlight.isSwitchedOn()){
-			circle.tint = 0xffffff;
 			window.plugins.flashlight.switchOff();
 		}
+		
+		circle.tint = 0xffffff;
 		game.stage.backgroundColor = '#000000';
 	}, 200);
 }

@@ -15,28 +15,28 @@ trombMain.prototype = {
     	game.add.image(100, 100, 'tromboneImg');
     	
         angleText2 = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
-		
-		if (game.state.getCurrentState().key == "Trombone"){
-			try{navigator.accelerometer.watchAcceleration(readTrombAccel, onError, { frequency: 2 });} catch(e){}
-		}
+
+		try{navigator.accelerometer.watchAcceleration(readTrombAccel, onError, { frequency: 2 });} catch(e){}	
     }
 };
 
 function readTrombAccel(acceleration){
-	accelY = Math.round(acceleration.y * 10) / 10;
+	if (game.state.getCurrentState().key == "Trombone"){
+		accelY = Math.round(acceleration.y * 10) / 10;
+		
+		angleText2.text = accelY;
+		
+		if (Math.abs(accelY - prev_reading) > MIN_DIF && !trombSound.isPlaying){
+			trombSound.play();
+			game.stage.backgroundColor = '#004022';
+		}
+		
+		trombSound.onStop.add(function(){
+			game.stage.backgroundColor = '#0f5420';
+		});
 	
-	angleText2.text = accelY;
-	
-	if (Math.abs(accelY - prev_reading) > MIN_DIF && !trombSound.isPlaying){
-		trombSound.play();
-		game.stage.backgroundColor = '#004022';
+		prev_reading = accelY;
 	}
-	
-	trombSound.onStop.add(function(){
-		game.stage.backgroundColor = '#0f5420';
-	});
-
-	prev_reading = accelY;
 }
 
 function onError() {

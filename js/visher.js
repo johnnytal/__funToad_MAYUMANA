@@ -14,45 +14,45 @@ visherMain.prototype = {
     	bg.alpha = 0.6;
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
-        
-        if (game.state.getCurrentState().key == "Visher"){
-        	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 2 });} catch(e){}
-        }
+
+    	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 2 });} catch(e){}
     }
 };
 
 function readVisherAccel(acceleration){
-	visherAccelX = Math.round(acceleration.x);
-	
-	angleText.text = visherAccelX;
-	
-	if (visherAccelX < -(GO_NUM) && !sound2.isPlaying && resetSounds){
-		resetSounds = false;
-		sound2.play();
-		window.plugins.flashlight.switchOn();
+	if (game.state.getCurrentState().key == "Visher"){
+		visherAccelX = Math.round(acceleration.x);
 		
-		setTimeout(function(){
-			window.plugins.flashlight.switchOff();
-		}, 200);
+		angleText.text = visherAccelX;
 		
-		game.stage.backgroundColor = '#ff00ff';
-		navigator.vibrate(200);
-	}
-	else if (visherAccelX > GO_NUM && !sound1.isPlaying && resetSounds){
-		resetSounds = false;
-		sound1.play();
-		window.plugins.flashlight.switchOn();
+		if (visherAccelX < -(GO_NUM) && !sound2.isPlaying && resetSounds){
+			resetSounds = false;
+			sound2.play();
+			window.plugins.flashlight.switchOn();
+			
+			setTimeout(function(){
+				window.plugins.flashlight.switchOff();
+			}, 200);
+			
+			game.stage.backgroundColor = '#ff00ff';
+			navigator.vibrate(200);
+		}
+		else if (visherAccelX > GO_NUM && !sound1.isPlaying && resetSounds){
+			resetSounds = false;
+			sound1.play();
+			window.plugins.flashlight.switchOn();
+			
+			setTimeout(function(){
+				window.plugins.flashlight.switchOff();
+			}, 200);
+			
+			game.stage.backgroundColor = '#f0ff0f';
+			navigator.vibrate(200);
+		}
 		
-		setTimeout(function(){
-			window.plugins.flashlight.switchOff();
-		}, 200);
-		
-		game.stage.backgroundColor = '#f0ff0f';
-		navigator.vibrate(200);
-	}
-	
-	else if (visherAccelX < Math.floor(GO_NUM / 2) && visherAccelX > -(Math.floor(GO_NUM / 2))){
-		resetSounds = true;
-		game.stage.backgroundColor = '#000000';
+		else if (visherAccelX < Math.floor(GO_NUM / 2) && visherAccelX > -(Math.floor(GO_NUM / 2))){
+			resetSounds = true;
+			game.stage.backgroundColor = '#000000';
+		}
 	}
 }
