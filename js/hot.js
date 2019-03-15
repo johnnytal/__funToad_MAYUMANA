@@ -12,7 +12,7 @@ gameMain.prototype = {
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
-  		questionText = game.add.text(0, 0, 'What is your\nfavorite color?', 
+  		questionText = game.add.text(0, 0, "What's your\nfavorite color?", 
   		{font: '32px', fill: 'white', align:'center', fontWeight:'bold', stroke:'black', strokeThickness: 1});
 		questionText.x = game.world.centerX - questionText.width / 2;
 		questionText.y = questionText.height / 2;
