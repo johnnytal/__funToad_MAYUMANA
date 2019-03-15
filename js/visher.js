@@ -32,7 +32,7 @@ visherMain.prototype = {
     update: function(){
 
     	if (game.state.getCurrentState().key == 'Visher'){
-	    	if (!resetVisher && wiper.angle > 5 && wiper.angle < -5){
+	    	if (!resetVisher && wiper.angle < 10 && wiper.angle > - 10){
 	    		resetVisher = true;
 	    	}
 	    	
