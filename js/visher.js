@@ -52,7 +52,7 @@ visherMain.prototype = {
 };
 
 function readVisherAccel(acceleration){
-	wiper.angle = acceleration.x * 3;
+	wiper.angle = acceleration.x * 2.7;
 	angleText.text = roundIt(acceleration.x);
 }
 
@@ -61,7 +61,7 @@ function flashVisher(_color){
 	navigator.vibrate(100);
 	game.stage.backgroundColor = _color;
 	
-	resetSounds = false;
+	resetVisher = false;
 	
 	setTimeout(function(){
 		window.plugins.flashlight.switchOff();
