@@ -32,17 +32,17 @@ visherMain.prototype = {
     update: function(){
 
     	if (game.state.getCurrentState().key == 'Visher'){
-	    	if (!resetVisher && wiper.angle < 10 && wiper.angle > - 10){
+	    	if (!resetVisher && wiper.angle < 20 && wiper.angle > - 20){
 	    		resetVisher = true;
 	    	}
 	    	
 	    	if (resetVisher){    	
-		    	if (wiper.angle < -25){
+		    	if (wiper.angle < -25 && game.stage.backgroundColor != '#ff00ff'){
 					haSfx.play();
 					flashVisher('#ff00ff');	
 	    		}
 		    	
-		    	else if (wiper.angle > 25){    		
+		    	else if (wiper.angle > 25 && game.stage.backgroundColor != '#f0ff0f'){    		
     				huSfx.play();
 					flashVisher('#f0ff0f');
 				}	
