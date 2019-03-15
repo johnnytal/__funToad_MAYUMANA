@@ -19,7 +19,7 @@ shakerMain.prototype = {
 		circles.physicsBodyType = Phaser.Physics.ARCADE;
 		
 		circle = circles.create(0, 0, 'red');
-		circle.scale.set(0.8, 0.8);
+		circle.scale.set(0.81, 0.81);
 
         circle.x = WIDTH / 2 - circle.width / 2;
         MIDDLE = HEIGHT / 2 - circle.height / 2;
@@ -36,13 +36,13 @@ shakerMain.prototype = {
 	    		resetTouching = true;
 	    	}
 	    	
-	    	if (resetTouching){    	
-		    	if (circle.y < 1){ // front
+	    	if (resetTouching && !front.isPlaying && !back.isPlaying){    	
+		    	if (circle.y < 0.5){ // front
 		    		front.play();
 					flash(FRONT_COLOR);	
 	    		}
 		    	
-		    	else if (circle.y > HEIGHT - circle.height - 1){ // back    		
+		    	else if (circle.y > HEIGHT - circle.height - 0.5){ // back    		
 	    			back.play();
 					flash(BACK_COLOR);
 				}	
@@ -52,7 +52,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
-    circle.y = MIDDLE + (acceleration.x * 5.5);
+    circle.y = MIDDLE + (acceleration.x * 5.62);
 }
 
 function flash(_color){
@@ -76,7 +76,7 @@ function flash(_color){
 		
 		circle.tint = 0xffffff;
 		game.stage.backgroundColor = '#000000';
-	}, 120);
+	}, 100);
 }
 
 function onError(){
