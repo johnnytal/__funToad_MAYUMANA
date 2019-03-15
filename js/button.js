@@ -128,5 +128,8 @@ function loadSounds(){
     sfx2 = game.add.audio('note2', 0.6);
     sfx3 = game.add.audio('note3', 0.6);
     
+    back = game.add.audio('back', 1);
+    front = game.add.audio('front', 1);
+    
     sounds = [sfx1, sfx2, sfx3];
 }

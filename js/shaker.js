@@ -37,12 +37,12 @@ shakerMain.prototype = {
 			alert('motion not supported');
 		}
 		
-		if (window.DeviceOrientationEvent) {
+		/*if (window.DeviceOrientationEvent) {
 			window.addEventListener('deviceorientation', handleOrientation);
 		}
 		else{
 			alert('orientation not supported');
-		}
+		}*/
     },
     
     update: function(){
@@ -52,13 +52,13 @@ shakerMain.prototype = {
 	    	}
 	    	
 	    	if (resetTouching){    	
-		    	if (circle.y == 0){ // front
-		    		window.plugins.NativeAudio.play('frontSfx');
+		    	if (circle.y == 1){ // front
+		    		front.play();
 					flash(GENTLE_COLOR);	
 	    		}
 		    	
-		    	else if (circle.y == HEIGHT - circle.height){ // back    		
-	    			window.plugins.NativeAudio.play('backSfx');
+		    	else if (circle.y == HEIGHT - circle.height - 1){ // back    		
+	    			back.play();
 					flash(BACK_COLOR);
 				}	
 	    	}
@@ -67,8 +67,10 @@ shakerMain.prototype = {
 };
 
 function deviceMotion(event){
+	
 	accelX = roundIt(event.acceleration.x);
-	circle.body.velocity.y = accelX * accelFactor;
+    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 20);
+	//circle.body.velocity.y = accelX * accelFactor;
 }
 
 function handleOrientation(event){

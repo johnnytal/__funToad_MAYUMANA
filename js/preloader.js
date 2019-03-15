@@ -1,16 +1,7 @@
 var preloader = function(game){};
  
 preloader.prototype = {
-    preload: function(){
-    	
-    	if (!this.game.device.desktop){
-			window.plugins.NativeAudio.preloadComplex('frontSfx', 'assets/audio/shakerGentle.mp3',  1, 1, 0, 
-			null, function(msg){alert(msg);});
-				
-			window.plugins.NativeAudio.preloadComplex('backSfx', 'assets/audio/shakerBack.mp3',  1, 1, 0, 
-			null, function(msg){alert(msg);});
-		}
-	
+    preload: function(){	
 		game.load.image('bg', 'assets/images/bg.png');
 		
         game.load.image('red', 'assets/images/red.png');
@@ -35,6 +26,9 @@ preloader.prototype = {
         
         game.load.audio("hu", "assets/audio/hu.ogg");
         game.load.audio("ha", "assets/audio/ha.ogg");
+        
+        game.load.audio("frontSfx", "assets/audio/front.mp3");
+        game.load.audio("backSfx", "assets/audio/back.mp3");
         
         game.load.audio("trombone", "assets/audio/trombone.mp3");
     },
