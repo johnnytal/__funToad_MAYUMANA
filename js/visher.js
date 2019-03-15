@@ -1,10 +1,8 @@
 var visherMain = function(game){
 	resetSounds = true;
-	enough_time = true;
-	
 	visherAccelX = 0;
 	
-	GO_NUM = 7.5;
+	GO_NUM = 6.5;
 };
 
 visherMain.prototype = {
@@ -17,56 +15,44 @@ visherMain.prototype = {
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
 
-    	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 2 });} catch(e){}
+    	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 1 });} catch(e){}
     }
 };
 
 function readVisherAccel(acceleration){
 	if (game.state.getCurrentState().key == "Visher"){
-		visherAccelX = Math.round(acceleration.x);
+		visherAccelX = roundIt(acceleration.x);
 		
 		angleText.text = visherAccelX;
 		
-		if (resetSounds && enough_time){
-			if (visherAccelX < -7.5 && !sound1.isPlaying && !sound2.isPlaying){
-				resetSounds = false;
-				enough_time = false;
+		if (resetSounds){
+			if (visherAccelX < -GO_NUM && !sound1.isPlaying && !sound2.isPlaying){
 				sound2.play();
-				window.plugins.flashlight.switchOn();
-				
-				setTimeout(function(){
-					window.plugins.flashlight.switchOff();
-				}, 100);
-				
-				game.stage.backgroundColor = '#ff00ff';
-				navigator.vibrate(100);
-				
-				setTimeout(function(){
-					enough_time = true;
-				}, 500);
+				flashVisher('#ff00ff');
 			}
-			else if (visherAccelX > 7.5 && !sound1.isPlaying && !sound2.isPlaying){
-				resetSounds = false;
-				enough_time = false;
+			else if (visherAccelX > GO_NUM && !sound1.isPlaying && !sound2.isPlaying){
 				sound1.play();
-				window.plugins.flashlight.switchOn();
-				
-				setTimeout(function(){
-					window.plugins.flashlight.switchOff();
-				}, 100);
-				
-				game.stage.backgroundColor = '#f0ff0f';
-				navigator.vibrate(100);
-				
-				setTimeout(function(){
-					enough_time = true;
-				}, 500);
+				flashVisher('#f0ff0f');
 			}
 		}
 		
-		if (visherAccelX < 2 && visherAccelX > -2 && !resetSounds){
-			resetSounds = true;
-			game.stage.backgroundColor = '#000000';
+		else{
+			if (visherAccelX < (GO_NUM / 3) && visherAccelX > -(GO_NUM / 3)){
+				resetSounds = true;
+				game.stage.backgroundColor = '#000000';
+			}
 		}
 	}
+}
+
+function flashVisher(_color){
+	window.plugins.flashlight.switchOn();
+	navigator.vibrate(100);
+	game.stage.backgroundColor = _color;
+	
+	resetSounds = false;
+	
+	setTimeout(function(){
+		window.plugins.flashlight.switchOff();
+	}, 100);	
 }

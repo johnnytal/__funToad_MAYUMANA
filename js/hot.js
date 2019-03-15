@@ -13,7 +13,7 @@ gameMain.prototype = {
     	bg.alpha = 0.6;
     	
   		questionText = game.add.text(0, 0, 'What is your\nfavorite color?', 
-  		{font: '38px', fill: 'white', align:'center', fontWeight:'bold', stroke:'black', strokeThickness: 1});
+  		{font: '32px', fill: 'white', align:'center', fontWeight:'bold', stroke:'black', strokeThickness: 1});
 		questionText.x = game.world.centerX - questionText.width / 2;
 		questionText.y = questionText.height / 2;
 		
@@ -30,7 +30,6 @@ gameMain.prototype = {
     	option2Img.y = game.world.centerY - option2Img.height / 2 + 25;
 
         button = this.add.sprite(0, 0, 'button');
-        button.scale.set(.5, .5);
         button.x = WIDTH / 2 - button.width / 2;
         button.y = HEIGHT / 2 + 15;
 
@@ -48,19 +47,16 @@ gameMain.prototype = {
 	    
 	    drag = this.add.image(0, 0, 'drag');
 	    drag.alpha = 0.6;
-	    drag.scale.set(.15,.15);
         drag.x = WIDTH / 2;
         drag.y = button.y + drag.height * 2;
         drag.anchor.set(.5, 1);
 
 	    swipe_r = this.add.image(0, 0, 'swipe_r');
-	    swipe_r.scale.set(.5,.5);
         swipe_r.x = WIDTH - swipe_r.width - 20;
         swipe_r.y = button.y + button.height / 6;
         swipe_r.alpha = 0.5;
 
 	    swipe_l = this.add.image(0, 0, 'swipe_l');
-	    swipe_l.scale.set(.5,.5);
         swipe_l.x = 20;
         swipe_l.y = button.y + button.height / 6;
         swipe_l.alpha = 0.5;

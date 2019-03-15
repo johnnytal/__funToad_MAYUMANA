@@ -1,12 +1,8 @@
 var shakerMain = function(game){
-	GENTLE_COLOR = '#c1ad65';
+	FRONT_COLOR = '#c1ad65';
 	BACK_COLOR = '#656d7c';
-
-	gamma = 0;
-	accelX = 0;
-
-	accelFactor = 57;
-	gammaFactor = 730;
+	
+	MIDDLE = null;
 
 	resetTouching = true;
 };
@@ -24,31 +20,26 @@ shakerMain.prototype = {
 		
 		circle = circles.create(0, 0, 'red');
 		circle.scale.set(0.8, 0.8);
+
         circle.x = WIDTH / 2 - circle.width / 2;
-        circle.y = HEIGHT / 2 - circle.height / 2;
+        MIDDLE = HEIGHT / 2 - circle.height / 2;
+        circle.y = MIDDLE;
 
         circle.body.collideWorldBounds = true;
         
-        watchID = navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});
-
-		/*if (window.DeviceMotionEvent) {
-		  	window.addEventListener('devicemotion', deviceMotion);
-		}
-		else{
-			alert('motion not supported');
-		}*/
+        try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
     },
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (circle.y > 15 && circle.y < HEIGHT - circle.height - 15){
+	    	if (!resetTouching && circle.y > 25 && circle.y < (HEIGHT - circle.height - 25)){
 	    		resetTouching = true;
 	    	}
 	    	
 	    	if (resetTouching){    	
 		    	if (circle.y < 1){ // front
 		    		front.play();
-					flash(GENTLE_COLOR);	
+					flash(FRONT_COLOR);	
 	    		}
 		    	
 		    	else if (circle.y > HEIGHT - circle.height - 1){ // back    		
@@ -61,27 +52,20 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
-	accelX = acceleration.x;
-    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 5.7);
-}
-
-function handleOrientation(event){
-	gamma = roundIt(event.gamma);  // -90,90 X
-	circle.body.gravity.y = (gamma * gammaFactor) * -1;
+    circle.y = MIDDLE + (acceleration.x * 5.6);
 }
 
 function flash(_color){
 	resetTouching = false;
 
 	game.stage.backgroundColor = _color;
+	circle.tint = 0xff00ff;
 	
-	if (_color == GENTLE_COLOR){
+	if (_color == FRONT_COLOR){
 		window.plugins.flashlight.switchOn();
-		circle.tint = 0xff00ff;
 		navigator.vibrate(30);
 	}
 	else{
-		circle.tint = 0xff00ff;
 		navigator.vibrate(15);
 	}
 

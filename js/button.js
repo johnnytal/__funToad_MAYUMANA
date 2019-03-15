@@ -4,8 +4,6 @@ var btnMain = function(game){
 	SOUND_BUTTONS_N = 3;
 	soundButtons = [];
 	colorBtns = ['red', 'green', 'blue'];
-	
-	multiSounds = true;
 };
 
 btnMain.prototype = {
@@ -20,7 +18,6 @@ btnMain.prototype = {
     	game.input.addPointer();
 
         mode_button = this.add.image(0, 0, 'cont');
-        mode_button.scale.set(.4, .4);
         mode_button.frame = 1;
         mode_button.y = HEIGHT - mode_button.height;
         mode_button.x = WIDTH - mode_button.width - 50;
@@ -34,8 +31,7 @@ function createSoundBtns(){
     soundBtnsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 	        
     for(b = 0; b < SOUND_BUTTONS_N; b++){
-    	soundButtons[b] = soundBtnsGroup.create(28 + (220 * (b%3)), 50, colorBtns[b]);
-    	soundButtons[b].alpha = 0.87;
+    	soundButtons[b] = soundBtnsGroup.create(28 + (220 * b), 50, colorBtns[b]);
     	soundButtons[b].inputEnabled = true;
 
 		soundButtons[b].events.onInputDown.add(playSound, this);
@@ -57,10 +53,6 @@ function playSound(item, kb){
 	var sound = sounds[place];
 
     if (!sound.isPlaying){
-        if (!multiSounds){ // no multichannel
-        	stopSounds();
-		}
-		
         if (!sound.paused){
             sound.play();  
             navigator.vibrate(250);  
@@ -119,17 +111,16 @@ function UIbuttons(){
 }
 
 function loadSounds(){
-	sound1 = game.add.audio('hu', 1, false);
-	sound2 = game.add.audio('ha', 1, false);
+	sound1 = game.add.audio('hu', 1);
+	sound2 = game.add.audio('ha', 1);
 	
-	trombSound = game.add.audio('trombone', 1, false);
+	trombSound = game.add.audio('trombone', 1);
 	
-    sfx1 = game.add.audio('note1', 0.6);
-    sfx2 = game.add.audio('note2', 0.6);
-    sfx3 = game.add.audio('note3', 0.6);
+    sfx1 = game.add.audio('note1', 0.5);
+    sfx2 = game.add.audio('note2', 0.5);
+    sfx3 = game.add.audio('note3', 0.5);
+    sounds = [sfx1, sfx2, sfx3];
     
     back = game.add.audio('back', 1);
-    front = game.add.audio('front', 1);
-    
-    sounds = [sfx1, sfx2, sfx3];
+    front = game.add.audio('front', 1); 
 }

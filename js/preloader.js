@@ -18,7 +18,7 @@ preloader.prototype = {
         
         game.load.image('arrowsImg', "assets/images/arrows.png");
 
-        game.load.spritesheet("cont", "assets/images/cont.png", 814/2, 256);
+        game.load.spritesheet("cont", "assets/images/cont.png", 325/2, 102);
         
         game.load.audio("note1", "assets/audio/note1.mp3");
         game.load.audio("note2", "assets/audio/note2.mp3");
