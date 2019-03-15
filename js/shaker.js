@@ -25,7 +25,7 @@ shakerMain.prototype = {
 		circle = circles.create(0, 0, 'red');
         circle.x = WIDTH / 2 - circle.width / 2;
         circle.y = HEIGHT / 2 - circle.height / 2;
-        circle.scale.set(0.75, 0.75);
+        circle.scale.set(0.82, 0.82);
  
         circle.body.collideWorldBounds = true;
 
@@ -60,7 +60,7 @@ shakerMain.prototype = {
 
 function deviceMotion(event){
 	accelX = event.acceleration.x;
-    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 4);
+    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 4.5);
 }
 
 function handleOrientation(event){
