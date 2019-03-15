@@ -32,7 +32,7 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (!resetTouching && circle.y > 25 && circle.y < (HEIGHT - circle.height - 25)){
+	    	if (!resetTouching && circle.y > 28 && circle.y < (HEIGHT - circle.height - 28)){
 	    		resetTouching = true;
 	    	}
 	    	
@@ -52,7 +52,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
-    circle.y = MIDDLE + (acceleration.x * 5.6);
+    circle.y = MIDDLE + (acceleration.x * 5.5);
 }
 
 function flash(_color){
