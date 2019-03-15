@@ -29,7 +29,7 @@ shakerMain.prototype = {
 
         circle.body.collideWorldBounds = true;
         
-        navigator.accelerometer.watchAcceleration(deviceMotion, onError);
+        watchID = navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});
 
 		/*if (window.DeviceMotionEvent) {
 		  	window.addEventListener('devicemotion', deviceMotion);
@@ -60,7 +60,7 @@ shakerMain.prototype = {
 	}
 };
 
-function deviceMotion(acceleration){
+function readAccel(acceleration){
 	accelX = acceleration.x;
     circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 4.75);
 }
