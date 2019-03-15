@@ -40,6 +40,6 @@ preloader.prototype = {
     },
     
     create: function(){	
-        this.game.state.start("Shaker"); 
+        this.game.state.start("Buttons"); 
     }
 };

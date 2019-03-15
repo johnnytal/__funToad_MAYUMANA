@@ -15,8 +15,10 @@ trombMain.prototype = {
     	game.add.image(100, 100, 'tromboneImg');
     	
         angleText2 = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
-
-		try{navigator.accelerometer.watchAcceleration(readTrombAccel, onError, { frequency: 2 });} catch(e){}
+		
+		if (game.state.getCurrentState().key == "Trombone"){
+			try{navigator.accelerometer.watchAcceleration(readTrombAccel, onError, { frequency: 2 });} catch(e){}
+		}
     }
 };
 

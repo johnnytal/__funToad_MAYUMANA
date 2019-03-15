@@ -97,13 +97,15 @@ function initPlugIns(){
 		alert('orientation not supported');
 	}
 	
-	if (window.DeviceMotionEvent) {
-	  	window.addEventListener('devicemotion', deviceMotion);
+	if (game.state.getCurrentState().key == 'Shaker'){
+		if (window.DeviceMotionEvent) {
+		  	window.addEventListener('devicemotion', deviceMotion);
+		}
+		else{
+			alert('motion not supported');
+		}
 	}
-	else{
-		alert('motion not supported');
-	}
-
+	
     try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
     try{StatusBar.hide();} catch(e){} // hide status bar
     try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume

@@ -15,7 +15,9 @@ visherMain.prototype = {
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
         
-        try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 2 });} catch(e){}
+        if (game.state.getCurrentState().key == "Visher"){
+        	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 2 });} catch(e){}
+        }
     }
 };
 
