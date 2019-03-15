@@ -37,12 +37,12 @@ visherMain.prototype = {
 	    	}
 	    	
 	    	if (resetVisher){    	
-		    	if (wiper.angle.y < -25){
+		    	if (wiper.angle < -25){
 					haSfx.play();
 					flashVisher('#ff00ff');	
 	    		}
 		    	
-		    	else if (wiper.angle.y > 25){    		
+		    	else if (wiper.angle > 25){    		
     				huSfx.play();
 					flashVisher('#f0ff0f');
 				}	
@@ -52,7 +52,7 @@ visherMain.prototype = {
 };
 
 function readVisherAccel(acceleration){
-	wiper.angle = acceleration.x * 2.5;
+	wiper.angle = acceleration.x * 3;
 	angleText.text = roundIt(acceleration.x);
 }
 
