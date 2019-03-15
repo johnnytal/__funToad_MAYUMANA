@@ -2,7 +2,7 @@ var visherMain = function(game){
 	resetSounds = true;
 	visherAccelX = 0;
 	
-	GO_NUM = 6.7;
+	GO_NUM = 7.5;
 };
 
 visherMain.prototype = {
@@ -32,10 +32,10 @@ function readVisherAccel(acceleration){
 			
 			setTimeout(function(){
 				window.plugins.flashlight.switchOff();
-			}, 200);
+			}, 150);
 			
 			game.stage.backgroundColor = '#ff00ff';
-			navigator.vibrate(150);
+			navigator.vibrate(100);
 		}
 		else if (visherAccelX > GO_NUM && !sound1.isPlaying && resetSounds){
 			resetSounds = false;
@@ -44,15 +44,19 @@ function readVisherAccel(acceleration){
 			
 			setTimeout(function(){
 				window.plugins.flashlight.switchOff();
-			}, 200);
+			}, 150);
 			
 			game.stage.backgroundColor = '#f0ff0f';
-			navigator.vibrate(150);
+			navigator.vibrate(100);
 		}
 		
-		else if (visherAccelX < Math.floor(GO_NUM / 2) && visherAccelX > -(Math.floor(GO_NUM / 2))){
-			resetSounds = true;
-			game.stage.backgroundColor = '#000000';
+		else if (visherAccelX < Math.floor(GO_NUM / 3) && visherAccelX > -(Math.floor(GO_NUM / 3))){
+			setTimeout(function(){
+				resetSounds = true;
+				game.stage.backgroundColor = '#000000';
+			}, 250);
 		}
+		
+
 	}
 }
