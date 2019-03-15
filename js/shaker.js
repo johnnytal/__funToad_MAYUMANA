@@ -52,12 +52,12 @@ shakerMain.prototype = {
 	    	}
 	    	
 	    	if (resetTouching){    	
-		    	if (circle.y == 1){ // front
+		    	if (circle.y < 1){ // front
 		    		front.play();
 					flash(GENTLE_COLOR);	
 	    		}
 		    	
-		    	else if (circle.y == HEIGHT - circle.height - 1){ // back    		
+		    	else if (circle.y > HEIGHT - circle.height - 1){ // back    		
 	    			back.play();
 					flash(BACK_COLOR);
 				}	
@@ -69,7 +69,7 @@ shakerMain.prototype = {
 function deviceMotion(event){
 	
 	accelX = event.acceleration.x;
-    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 15);
+    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 7);
 	//circle.body.velocity.y = accelX * accelFactor;
 }
 
@@ -86,11 +86,11 @@ function flash(_color){
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
 		circle.tint = 0xff00ff;
-		navigator.vibrate(150);
+		navigator.vibrate(100);
 	}
 	else{
 		circle.tint = 0xff00ff;
-		navigator.vibrate(75);
+		navigator.vibrate(50);
 	}
 
 	setTimeout(function(){
