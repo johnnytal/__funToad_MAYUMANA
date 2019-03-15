@@ -7,7 +7,6 @@ var shakerMain = function(game){
 
 	accelFactor = 57;
 	gammaFactor = 730;
-	ballFactor = 969;
 
 	resetTouching = true;
 };
@@ -26,7 +25,7 @@ shakerMain.prototype = {
 		circle = circles.create(0, 0, 'red');
         circle.x = WIDTH / 2 - circle.width / 2;
         circle.y = HEIGHT / 2 - circle.height / 2;
-        circle.scale.set(ballFactor/1000, ballFactor/1000);
+        circle.scale.set(0.75, 0.75);
  
         circle.body.collideWorldBounds = true;
 
@@ -36,13 +35,6 @@ shakerMain.prototype = {
 		else{
 			alert('motion not supported');
 		}
-		
-		/*if (window.DeviceOrientationEvent) {
-			window.addEventListener('deviceorientation', handleOrientation);
-		}
-		else{
-			alert('orientation not supported');
-		}*/
     },
     
     update: function(){
@@ -69,7 +61,6 @@ shakerMain.prototype = {
 function deviceMotion(event){
 	accelX = event.acceleration.x;
     circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 4);
-	//circle.body.velocity.y = accelX * accelFactor;
 }
 
 function handleOrientation(event){
@@ -85,11 +76,11 @@ function flash(_color){
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
 		circle.tint = 0xff00ff;
-		navigator.vibrate(75);
+		navigator.vibrate(70);
 	}
 	else{
 		circle.tint = 0xff00ff;
-		navigator.vibrate(25);
+		navigator.vibrate(20);
 	}
 
 	setTimeout(function(){
