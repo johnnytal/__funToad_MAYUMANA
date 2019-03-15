@@ -26,26 +26,26 @@ function readVisherAccel(acceleration){
 		angleText.text = visherAccelX;
 		
 		if (resetSounds){
-			if (visherAccelX < -(GO_NUM) && !sound2.isPlaying){
+			if (visherAccelX < -7.5 && !sound1.isPlaying && !sound2.isPlaying){
 				resetSounds = false;
 				sound2.play();
 				window.plugins.flashlight.switchOn();
 				
 				setTimeout(function(){
 					window.plugins.flashlight.switchOff();
-				}, 150);
+				}, 100);
 				
 				game.stage.backgroundColor = '#ff00ff';
 				navigator.vibrate(100);
 			}
-			else if (visherAccelX > GO_NUM && !sound1.isPlaying){
+			else if (visherAccelX > 7.5 && !sound1.isPlaying && !sound2.isPlaying){
 				resetSounds = false;
 				sound1.play();
 				window.plugins.flashlight.switchOn();
 				
 				setTimeout(function(){
 					window.plugins.flashlight.switchOff();
-				}, 150);
+				}, 100);
 				
 				game.stage.backgroundColor = '#f0ff0f';
 				navigator.vibrate(100);
@@ -53,12 +53,8 @@ function readVisherAccel(acceleration){
 		}
 		
 		if (visherAccelX < 2 && visherAccelX > -2 && !resetSounds){
-			setTimeout(function(){
-				resetSounds = true;
-				game.stage.backgroundColor = '#000000';
-			}, 250);
+			resetSounds = true;
+			game.stage.backgroundColor = '#000000';
 		}
-		
-
 	}
 }
