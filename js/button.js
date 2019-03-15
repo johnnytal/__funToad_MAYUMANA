@@ -125,17 +125,3 @@ function toggle_mode(item){
 		pause_mode = true;
 	}
 }
-
-function initPlugIns(){
-    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
-    try{StatusBar.hide();} catch(e){} // hide status bar
-    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
-}
-
-function loadSounds(){
-    sfx1 = game.add.audio('note1', 0.6);
-    sfx2 = game.add.audio('note2', 0.6);
-    sfx3 = game.add.audio('note3', 0.6);
-    
-    sounds = [sfx1, sfx2, sfx3];
-}

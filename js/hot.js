@@ -111,9 +111,3 @@ function choose(_what){
 		}, this);
 	}, 200);
 }
-
-function initPlugIns(){
-    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
-    try{StatusBar.hide();} catch(e){} // hide status bar
-    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
-}
