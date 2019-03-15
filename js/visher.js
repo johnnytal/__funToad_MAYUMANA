@@ -1,6 +1,9 @@
 var visherMain = function(game){
 	resetVisher = true;
 	GO_NUM = 6.5;
+	
+	HU_COLOR = '#ff00ff';
+	HA_COLOR = '#f0ff0f';
 };
 
 visherMain.prototype = {
@@ -37,14 +40,14 @@ visherMain.prototype = {
 	    	}
 	    	
 	    	if (resetVisher){    	
-		    	if (wiper.angle < -25 && game.stage.backgroundColor != '#ff00ff'){
+		    	if (wiper.angle < -25 && game.stage.backgroundColor != 16711935){
 					haSfx.play();
-					flashVisher('#ff00ff');	
+					flashVisher(HU_COLOR);	
 	    		}
 		    	
-		    	else if (wiper.angle > 25 && game.stage.backgroundColor != '#f0ff0f'){    		
+		    	else if (wiper.angle > 25 && game.stage.backgroundColor != 15793935){    		
     				huSfx.play();
-					flashVisher('#f0ff0f');
+					flashVisher(HA_COLOR);
 				}	
 	    	}
     	}
