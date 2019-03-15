@@ -22,6 +22,10 @@ preloader.prototype = {
         
         game.load.image('swipe_r', "assets/images/swipe_r.png");
         game.load.image('swipe_l', "assets/images/swipe_l.png");
+        
+        game.load.image('tromboneImg', "assets/images/trombone.png");
+        
+        game.load.image('arrowsImg', "assets/images/arrows.png");
 
         game.load.spritesheet("cont", "assets/images/cont.png", 814/2, 256);
         

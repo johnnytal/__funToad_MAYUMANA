@@ -105,5 +105,5 @@ function choose(_what){
 		tweenR.stop();
 	}, 200);
 	
-	vibrate(500);
+	navigator.vibrate(500);
 }

@@ -1,6 +1,7 @@
 var visherMain = function(game){
-	visherAccelX = 0;
 	resetSounds = true;
+	visherAccelX = 0;
+	
 	GO_NUM = 6.7;
 };
 
@@ -8,14 +9,17 @@ visherMain.prototype = {
     create: function(){ 
     	game.stage.backgroundColor = '#ff4502';
     	
+    	game.add.image(100, 100, 'arrowsImg');
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
+        
+        try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 2 });} catch(e){}
     }
 };
 
-function readAccel(acceleration){
+function readVisherAccel(acceleration){
 	visherAccelX = Math.round(acceleration.x);
 	
 	angleText.text = visherAccelX;
