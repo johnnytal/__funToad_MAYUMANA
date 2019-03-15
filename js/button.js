@@ -24,6 +24,10 @@ btnMain.prototype = {
         
         mode_button.inputEnabled = true;
         mode_button.events.onInputDown.add(toggle_mode, this);  
+        
+		loadSounds();
+		initPlugIns();
+		UIbuttons();
     }	
 };
 
@@ -95,4 +99,35 @@ function toggle_mode(item){
 		item.frame = 0;
 		pause_mode = true;
 	}
+}
+
+function roundIt(_num){
+	return Math.round(_num * 100) / 100;
+}
+
+function initPlugIns(){
+    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
+    try{StatusBar.hide();} catch(e){} // hide status bar
+    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
+}
+
+function UIbuttons(){	    	
+	document.getElementById("shakerBtn").addEventListener('click', function(){  game.state.start("Shaker"); }); 
+	document.getElementById("visherBtn").addEventListener('click', function(){ game.state.start("Visher"); }); 
+    document.getElementById("trombBtn").addEventListener('click', function(){ game.state.start("Trombone"); }); 
+    document.getElementById("btnBtn").addEventListener('click', function(){ game.state.start("Buttons"); }); 
+    document.getElementById("hotBtn").addEventListener('click', function(){ game.state.start("Hot"); }); 
+}
+
+function loadSounds(){
+	sound1 = game.add.audio('hu', 1, false);
+	sound2 = game.add.audio('ha', 1, false);
+	
+	trombSound = game.add.audio('trombone', 1, false);
+	
+    sfx1 = game.add.audio('note1', 0.6);
+    sfx2 = game.add.audio('note2', 0.6);
+    sfx3 = game.add.audio('note3', 0.6);
+    
+    sounds = [sfx1, sfx2, sfx3];
 }

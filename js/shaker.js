@@ -29,10 +29,22 @@ shakerMain.prototype = {
         circle.scale.set(ballFactor/1000, ballFactor/1000);
  
         circle.body.collideWorldBounds = true;
-		
-		loadSounds();
-		initPlugIns();
-		UIbuttons();
+
+		if (game.state.getCurrentState().key == 'Shaker'){
+			if (window.DeviceMotionEvent) {
+			  	window.addEventListener('devicemotion', deviceMotion);
+			}
+			else{
+				alert('motion not supported');
+			}
+			
+			if (window.DeviceOrientationEvent) {
+				window.addEventListener('deviceorientation', handleOrientation);
+			}
+			else{
+				alert('orientation not supported');
+			}
+		}
     },
     
     update: function(){
@@ -71,63 +83,19 @@ function flash(_color){
 	
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
+		circle.tint = 0xf45002;
 		navigator.vibrate(200);
 	}
 	else{
+		circle.tint = 0xf45002;
 		navigator.vibrate(100);
 	}
 
 	setTimeout(function(){
 		if (window.plugins.flashlight.isSwitchedOn()){
+			circle.tint = 0xffffff;
 			window.plugins.flashlight.switchOff();
 		}
 		game.stage.backgroundColor = '#000000';
 	}, 200);
-}
-
-function roundIt(_num){
-	return Math.round(_num * 100) / 100;
-}
-
-function initPlugIns(){
-	if (window.DeviceOrientationEvent) {
-		window.addEventListener('deviceorientation', handleOrientation);
-	}
-	else{
-		alert('orientation not supported');
-	}
-	
-	if (game.state.getCurrentState().key == 'Shaker'){
-		if (window.DeviceMotionEvent) {
-		  	window.addEventListener('devicemotion', deviceMotion);
-		}
-		else{
-			alert('motion not supported');
-		}
-	}
-	
-    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
-    try{StatusBar.hide();} catch(e){} // hide status bar
-    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
-}
-
-function UIbuttons(){	    	
-	document.getElementById("shakerBtn").addEventListener('click', function(){  game.state.start("Shaker"); }); 
-	document.getElementById("visherBtn").addEventListener('click', function(){ game.state.start("Visher"); }); 
-    document.getElementById("trombBtn").addEventListener('click', function(){ game.state.start("Trombone"); }); 
-    document.getElementById("btnBtn").addEventListener('click', function(){ game.state.start("Buttons"); }); 
-    document.getElementById("hotBtn").addEventListener('click', function(){ game.state.start("Hot"); }); 
-}
-
-function loadSounds(){
-	sound1 = game.add.audio('hu', 1, false);
-	sound2 = game.add.audio('ha', 1, false);
-	
-	trombSound = game.add.audio('trombone', 1, false);
-	
-    sfx1 = game.add.audio('note1', 0.6);
-    sfx2 = game.add.audio('note2', 0.6);
-    sfx3 = game.add.audio('note3', 0.6);
-    
-    sounds = [sfx1, sfx2, sfx3];
 }
