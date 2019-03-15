@@ -3,6 +3,8 @@ var visherMain = function(game){
 	visherAccelX = 0;
 	
 	GO_NUM = 7.5;
+	
+	enough_time = false;
 };
 
 visherMain.prototype = {
@@ -25,7 +27,7 @@ function readVisherAccel(acceleration){
 		
 		angleText.text = visherAccelX;
 		
-		if (resetSounds){
+		if (resetSounds && enough_time){
 			if (visherAccelX < -7.5 && !sound1.isPlaying && !sound2.isPlaying){
 				resetSounds = false;
 				sound2.play();
@@ -37,6 +39,10 @@ function readVisherAccel(acceleration){
 				
 				game.stage.backgroundColor = '#ff00ff';
 				navigator.vibrate(100);
+				
+				setTimeout(function(){
+					enough_time = true;
+				}, 500);
 			}
 			else if (visherAccelX > 7.5 && !sound1.isPlaying && !sound2.isPlaying){
 				resetSounds = false;
@@ -49,6 +55,10 @@ function readVisherAccel(acceleration){
 				
 				game.stage.backgroundColor = '#f0ff0f';
 				navigator.vibrate(100);
+				
+				setTimeout(function(){
+					enough_time = true;
+				}, 500);
 			}
 		}
 		
