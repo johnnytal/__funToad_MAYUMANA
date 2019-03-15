@@ -71,6 +71,10 @@ function flash(_color){
 	
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
+		navigator.vibrate(200);
+	}
+	else{
+		navigator.vibrate(100);
 	}
 
 	setTimeout(function(){
@@ -79,8 +83,6 @@ function flash(_color){
 		}
 		game.stage.backgroundColor = '#000000';
 	}, 200);
-	
-	navigator.vibrate(200);
 }
 
 function roundIt(_num){
@@ -118,6 +120,7 @@ function UIbuttons(){
 function loadSounds(){
 	sound1 = game.add.audio('hu', 1, false);
 	sound2 = game.add.audio('ha', 1, false);
+	
 	trombSound = game.add.audio('trombone', 1, false);
 	
     sfx1 = game.add.audio('note1', 0.6);

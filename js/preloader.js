@@ -28,6 +28,11 @@ preloader.prototype = {
         game.load.audio("note1", "assets/audio/note1.mp3");
         game.load.audio("note2", "assets/audio/note2.mp3");
         game.load.audio("note3", "assets/audio/note3.mp3");
+        
+        game.load.audio("hu", "assets/audio/hu.ogg");
+        game.load.audio("ha", "assets/audio/ha.ogg");
+        
+        game.load.audio("trombone", "assets/audio/trombone.mp3");
     },
     
     create: function(){	

@@ -13,24 +13,26 @@ gameMain.prototype = {
     	bg.alpha = 0.6;
     	
   		questionText = game.add.text(0, 0, 'What is your\nfavorite color?', 
-  		{font: '46px', fill: 'white', align:'center', fontWeight:'bold'});
+  		{font: '42px', fill: 'white', align:'center', fontWeight:'bold'});
 		questionText.x = game.world.centerX - questionText.width / 2;
-		questionText.y = questionText.height / 4;
+		questionText.y = questionText.height / 2;
 		
         option1Img = this.add.image(0, 0, 'red');
         option1Img.anchor.set(.5,.5);
+        option1Img.scale.set(.5,.5);
         option1Img.x = option1Img.width - 50;
-    	option1Img.y = game.world.centerY - option1Img.height / 2;
+    	option1Img.y = game.world.centerY - option1Img.height / 2 + 25;
 
         option2Img = this.add.image(0, 0, 'green');
         option2Img.anchor.set(.5,.5);
+        option2Img.scale.set(.5,.5);
         option2Img.x = WIDTH - option2Img.width + 50;
-    	option2Img.y = game.world.centerY - option2Img.height / 2;
+    	option2Img.y = game.world.centerY - option2Img.height / 2 + 25;
 
         button = this.add.sprite(0, 0, 'button');
-        button.scale.set(.75, .75);
+        button.scale.set(.5, .5);
         button.x = WIDTH / 2 - button.width / 2;
-        button.y = HEIGHT / 2 + button.height / 4;
+        button.y = HEIGHT / 2 + 15;
 
         button.events.onInputDown.add(function(){
         	game.add.tween(drag).to( { alpha: 0 }, 800, "Linear", true);
@@ -46,19 +48,19 @@ gameMain.prototype = {
 	    
 	    drag = this.add.image(0, 0, 'drag');
 	    drag.alpha = 0.6;
-	    drag.scale.set(.2,.2);
+	    drag.scale.set(.15,.15);
         drag.x = WIDTH / 2;
         drag.y = button.y + drag.height * 2;
         drag.anchor.set(.5, 1);
 
 	    swipe_r = this.add.image(0, 0, 'swipe_r');
-	    swipe_r.scale.set(.7,.7);
+	    swipe_r.scale.set(.5,.5);
         swipe_r.x = WIDTH - swipe_r.width - 20;
         swipe_r.y = button.y + button.height / 6;
         swipe_r.alpha = 0.5;
 
 	    swipe_l = this.add.image(0, 0, 'swipe_l');
-	    swipe_l.scale.set(.7,.7);
+	    swipe_l.scale.set(.5,.5);
         swipe_l.x = 20;
         swipe_l.y = button.y + button.height / 6;
         swipe_l.alpha = 0.5;
@@ -68,7 +70,7 @@ gameMain.prototype = {
         tweenR = game.add.tween(swipe_r).to( { alpha: 0.8 }, 800, "Linear", true, 0, -1);
     	tweenR.yoyo(true, 40);
     	
-    	elements = [option1Img, option2Img, button, drag, swipe_l, swipe_r];
+    	elements = [option1Img, option2Img, button, drag, swipe_l, swipe_r, questionText];
     },
     update: function(){
     	if (notChosen){
@@ -91,7 +93,7 @@ function choose(_what){
 	button.inputEnabled = false;
 
 	setTimeout(function(){
-		game.add.tween(_what.scale).to({ x: 1.75, y: 1.75}, 3000, "Linear", true);
+		game.add.tween(_what.scale).to({ x: 1.25, y: 1.25}, 3000, "Linear", true);
 		
 		for(n=0; n<elements.length; n++){
 			if (elements[n] != _what){
@@ -101,13 +103,5 @@ function choose(_what){
 		
 		tweenL.stop();
 		tweenR.stop();
-		
-		FOtween.onComplete.add(function(){
-			setTimeout(function(){
-				if (game.state.getCurrentState().key == 'Hot'){
-					this.game.state.start("Hot");
-				}
-			},5000);
-		}, this);
 	}, 200);
 }
