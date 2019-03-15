@@ -1,5 +1,5 @@
 var visherMain = function(game){
-	accelX = 0;
+	visherAccelX = 0;
 	resetSounds = true;
 	GO_NUM = 6.7;
 };
@@ -12,18 +12,15 @@ visherMain.prototype = {
     	bg.alpha = 0.6;
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
-
-		initPlugIns();
-		loadSounds();
     }
 };
 
 function readAccel(acceleration){
-	accelX = Math.round(acceleration.x);
+	visherAccelX = Math.round(acceleration.x);
 	
-	angleText.text = accelX;
+	angleText.text = visherAccelX;
 	
-	if (accelX < -(GO_NUM) && !sound2.isPlaying && resetSounds){
+	if (visherAccelX < -(GO_NUM) && !sound2.isPlaying && resetSounds){
 		resetSounds = false;
 		sound2.play();
 		window.plugins.flashlight.switchOn();
@@ -35,7 +32,7 @@ function readAccel(acceleration){
 		game.stage.backgroundColor = '#ff00ff';
 		navigator.vibrate(200);
 	}
-	else if (accelX > GO_NUM && !sound1.isPlaying && resetSounds){
+	else if (visherAccelX > GO_NUM && !sound1.isPlaying && resetSounds){
 		resetSounds = false;
 		sound1.play();
 		window.plugins.flashlight.switchOn();
@@ -48,7 +45,7 @@ function readAccel(acceleration){
 		navigator.vibrate(200);
 	}
 	
-	else if (accelX < Math.floor(GO_NUM / 2) && accelX > -(Math.floor(GO_NUM / 2))){
+	else if (visherAccelX < Math.floor(GO_NUM / 2) && visherAccelX > -(Math.floor(GO_NUM / 2))){
 		resetSounds = true;
 		game.stage.backgroundColor = '#000000';
 	}

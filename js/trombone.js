@@ -1,6 +1,5 @@
 var trombMain = function(game){
 	accelY = 0;
-	resetSounds = true;
 	prev_reading = 0;
 	
 	MIN_DIF = 1.75;
@@ -13,7 +12,7 @@ trombMain.prototype = {
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
-        angleText = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
+        angleText2 = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
 
 		try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 2 });} catch(e){}
     }
@@ -22,7 +21,7 @@ trombMain.prototype = {
 function readAccel(acceleration){
 	accelY = Math.round(acceleration.y * 10) / 10;
 	
-	angleText.text = accelY;
+	angleText2.text = accelY;
 	
 	if (Math.abs(accelY - prev_reading) > MIN_DIF && !trombSound.isPlaying){
 		trombSound.play();
