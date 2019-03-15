@@ -26,11 +26,7 @@ btnMain.prototype = {
         mode_button.x = WIDTH - mode_button.width - 50;
         
         mode_button.inputEnabled = true;
-        mode_button.events.onInputDown.add(toggle_mode, this);  
-        
-		loadSounds();
-		initPlugIns();
-		UIbuttons();
+        mode_button.events.onInputDown.add(toggle_mode, this);
     }	
 };
 

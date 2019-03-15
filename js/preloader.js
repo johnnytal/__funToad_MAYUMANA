@@ -39,7 +39,11 @@ preloader.prototype = {
         game.load.audio("trombone", "assets/audio/trombone.mp3");
     },
     
-    create: function(){	
+    create: function(){		        
+		loadSounds();
+		initPlugIns();
+		UIbuttons();
+		
         this.game.state.start("Buttons"); 
     }
 };
