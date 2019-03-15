@@ -52,7 +52,7 @@ visherMain.prototype = {
 };
 
 function readVisherAccel(acceleration){
-	wiper.angle = acceleration.x;
+	wiper.angle = acceleration.x * 2.5;
 	angleText.text = roundIt(acceleration.x);
 }
 
