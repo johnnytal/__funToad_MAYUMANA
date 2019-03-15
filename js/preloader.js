@@ -27,8 +27,8 @@ preloader.prototype = {
         game.load.audio("hu", "assets/audio/hu.ogg");
         game.load.audio("ha", "assets/audio/ha.ogg");
         
-        game.load.audio("frontSfx", "assets/audio/front.mp3");
-        game.load.audio("backSfx", "assets/audio/back.mp3");
+        game.load.audio("front", "assets/audio/front.mp3");
+        game.load.audio("back", "assets/audio/back.mp3");
         
         game.load.audio("trombone", "assets/audio/trombone.mp3");
     },

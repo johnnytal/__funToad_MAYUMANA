@@ -68,7 +68,7 @@ shakerMain.prototype = {
 
 function deviceMotion(event){
 	accelX = event.acceleration.x;
-    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 5);
+    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 4);
 	//circle.body.velocity.y = accelX * accelFactor;
 }
 
@@ -85,11 +85,11 @@ function flash(_color){
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
 		circle.tint = 0xff00ff;
-		navigator.vibrate(100);
+		navigator.vibrate(75);
 	}
 	else{
 		circle.tint = 0xff00ff;
-		navigator.vibrate(50);
+		navigator.vibrate(25);
 	}
 
 	setTimeout(function(){
