@@ -14,11 +14,11 @@ trombMain.prototype = {
     	
         angleText2 = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
 
-		try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 2 });} catch(e){}
+		try{navigator.accelerometer.watchAcceleration(readTrombAccel, onError, { frequency: 2 });} catch(e){}
     }
 };
 
-function readAccel(acceleration){
+function readTrombAccel(acceleration){
 	accelY = Math.round(acceleration.y * 10) / 10;
 	
 	angleText2.text = accelY;
@@ -30,6 +30,6 @@ function readAccel(acceleration){
 	prev_reading = accelY;
 }
 
-function onError(err) {
-    alert('Error: ' + err);
+function onError() {
+    alert('Error');
 };

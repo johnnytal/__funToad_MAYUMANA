@@ -1,8 +1,6 @@
 var btnMain = function(game){
 	pause_mode = false;
-	
-	DEFAULT_COLOR = '#00ffff';
-	
+
 	SOUND_BUTTONS_N = 3;
 	soundButtons = [];
 	colorBtns = ['red', 'green', 'blue'];
@@ -18,7 +16,6 @@ btnMain.prototype = {
     	bg.alpha = 0.6;
     	
     	createSoundBtns();
-    	loadSounds();
 
         mode_button = this.add.image(0, 0, 'cont');
         mode_button.scale.set(.5, .5);
@@ -27,8 +24,6 @@ btnMain.prototype = {
         
         mode_button.inputEnabled = true;
         mode_button.events.onInputDown.add(toggle_mode, this);  
-
-        initPlugIns(); 
     }	
 };
 
@@ -49,30 +44,6 @@ function createSoundBtns(){
     }
 }
 
-function on_play_down(_item){	
-	server_sound.play();
-
-	_item.frame = 0;
-	game.stage.backgroundColor = server_color;
-	window.plugins.flashlight.switchOn();
-}
-
-function on_play_up(_item){
-	if (pause_mode){
-		server_sound.stop();
-
-		_item.frame = 1;
-		game.stage.backgroundColor = DEFAULT_COLOR;
-		window.plugins.flashlight.switchOff();
-	}
-}
-
-function on_sound_ended(){
-	play_button.frame = 1;
-	game.stage.backgroundColor = DEFAULT_COLOR;
-	window.plugins.flashlight.switchOff();
-}
-
 function playSound(item, kb){	
 	var place;
 
@@ -88,7 +59,8 @@ function playSound(item, kb){
 		}
 		
         if (!sound.paused){
-            sound.play();    
+            sound.play();  
+            vibrate(250);  
         }
         else{
             sound.resume();
@@ -101,7 +73,7 @@ function playSound(item, kb){
            sprite.frame = 0;
            sprite.tint = 0xffffff;
         }, this);
-    } 
+    }
     
     else{
         sound.stop();
@@ -113,7 +85,6 @@ function stopSounds(){
         sounds[n].stop();
     }   
 }
-
 
 function toggle_mode(item){
 	if (item.frame == 0){

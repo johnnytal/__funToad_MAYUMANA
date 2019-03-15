@@ -29,9 +29,9 @@ shakerMain.prototype = {
         circle.scale.set(ballFactor/1000, ballFactor/1000);
  
         circle.body.collideWorldBounds = true;
-
-		initPlugIns();
 		
+		loadSounds();
+		initPlugIns();
 		UIbuttons();
     },
     

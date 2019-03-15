@@ -104,4 +104,6 @@ function choose(_what){
 		tweenL.stop();
 		tweenR.stop();
 	}, 200);
+	
+	vibrate(500);
 }

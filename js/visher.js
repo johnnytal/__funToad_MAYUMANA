@@ -27,7 +27,7 @@ function readAccel(acceleration){
 		
 		setTimeout(function(){
 			window.plugins.flashlight.switchOff();
-		}, 1000);
+		}, 200);
 		
 		game.stage.backgroundColor = '#ff00ff';
 		navigator.vibrate(200);
@@ -39,9 +39,9 @@ function readAccel(acceleration){
 		
 		setTimeout(function(){
 			window.plugins.flashlight.switchOff();
-		}, 1000);
+		}, 200);
 		
-		game.stage.backgroundColor = '#00ff00';
+		game.stage.backgroundColor = '#f0ff0f';
 		navigator.vibrate(200);
 	}
 	
