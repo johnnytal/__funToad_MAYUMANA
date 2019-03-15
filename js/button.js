@@ -2,6 +2,12 @@ var btnMain = function(game){
 	pause_mode = false;
 	
 	DEFAULT_COLOR = '#00ffff';
+	
+	SOUND_BUTTONS_N = 3;
+	soundButtons = [];
+	colorBtns = ['red', 'green', 'blue'];
+	
+	multiSounds = true;
 };
 
 btnMain.prototype = {
@@ -11,17 +17,9 @@ btnMain.prototype = {
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
-		server_sound = game.add.audio('saraSound');
+    	createSoundBtns();
+    	loadSounds();
 
-        play_button = this.add.image(0, 0, 'red');
-        play_button.frame = 1;
-        play_button.x = WIDTH / 2 - play_button.width / 2;
-        play_button.y = HEIGHT / 2 - play_button.height / 2;
-        
-        play_button.inputEnabled = true;
-        play_button.events.onInputDown.add(on_play_down, this);
-        play_button.events.onInputUp.add(on_play_up, this);
-        
         mode_button = this.add.image(0, 0, 'cont');
         mode_button.scale.set(.5, .5);
         mode_button.frame = 1;
@@ -29,12 +27,27 @@ btnMain.prototype = {
         
         mode_button.inputEnabled = true;
         mode_button.events.onInputDown.add(toggle_mode, this);  
-        
-        //server_sound.onStop.add(on_sound_ended, this);   
-        
+
         initPlugIns(); 
     }	
 };
+
+function createSoundBtns(){        
+    soundBtnsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
+	        
+    for(b = 0; b < SOUND_BUTTONS_N; b++){
+    	soundButtons[b] = soundBtnsGroup.create(28 + (220 * (b%3)), 50, colorBtns[b]);
+    	soundButtons[b].alpha = 0.87;
+    	soundButtons[b].inputEnabled = true;
+
+		soundButtons[b].events.onInputDown.add(playSound, this);
+		soundButtons[b].scale.set(.6, .6);
+		
+        soundButtons[b].events.onInputUp.add(function(){
+            if (pause_mode) stopSounds();
+        }, this);  
+    }
+}
 
 function on_play_down(_item){	
 	server_sound.play();
@@ -60,6 +73,48 @@ function on_sound_ended(){
 	window.plugins.flashlight.switchOff();
 }
 
+function playSound(item, kb){	
+	var place;
+
+	place = soundButtons.indexOf(item);
+	theButton = soundButtons[place];
+
+	var sprite = soundButtons[place];
+	var sound = sounds[place];
+
+    if (!sound.isPlaying){
+        if (!multiSounds){ // no multichannel
+        	stopSounds();
+		}
+		
+        if (!sound.paused){
+            sound.play();    
+        }
+        else{
+            sound.resume();
+        }
+		
+		sprite.frame = 1;
+        sprite.tint = 0xe3dfff;
+        
+        sound.onStop.add(function(){
+           sprite.frame = 0;
+           sprite.tint = 0xffffff;
+        }, this);
+    } 
+    
+    else{
+        sound.stop();
+    }    
+}
+
+function stopSounds(){
+    for (n = 0; n < sounds.length; n++){
+        sounds[n].stop();
+    }   
+}
+
+
 function toggle_mode(item){
 	if (item.frame == 0){
 		item.frame = 1;
@@ -75,4 +130,12 @@ function initPlugIns(){
     try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
     try{StatusBar.hide();} catch(e){} // hide status bar
     try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
+}
+
+function loadSounds(){
+    sfx1 = game.add.audio('note1', 0.6);
+    sfx2 = game.add.audio('note2', 0.6);
+    sfx3 = game.add.audio('note3', 0.6);
+    
+    sounds = [sfx1, sfx2, sfx3];
 }

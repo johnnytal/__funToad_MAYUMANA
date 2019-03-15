@@ -24,6 +24,10 @@ preloader.prototype = {
         game.load.image('swipe_l', "assets/images/swipe_l.png");
 
         game.load.spritesheet("cont", "assets/images/cont.png", 814/2, 256);
+        
+        game.load.audio("note1", "assets/audio/note1.mp3");
+        game.load.audio("note2", "assets/audio/note2.mp3");
+        game.load.audio("note3", "assets/audio/note3.mp3");
     },
     
     create: function(){	
