@@ -111,8 +111,8 @@ function UIbuttons(){
 }
 
 function loadSounds(){
-	sound1 = game.add.audio('hu', 1);
-	sound2 = game.add.audio('ha', 1);
+	huSfx = game.add.audio('hu', 1);
+	haSfx = game.add.audio('ha', 1);
 	
 	trombSound = game.add.audio('trombone', 1);
 	

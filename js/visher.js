@@ -1,7 +1,5 @@
 var visherMain = function(game){
-	resetSounds = true;
-	visherAccelX = 0;
-	
+	resetVisher = true;
 	GO_NUM = 6.5;
 };
 
@@ -9,40 +7,53 @@ visherMain.prototype = {
     create: function(){ 
     	game.stage.backgroundColor = '#ff4502';
     	
-    	game.add.image(350, 25, 'arrowsImg');
+        wipers = game.add.group();
+		wipers.enableBody = true;
+		wipers.physicsBodyType = Phaser.Physics.ARCADE;
+		
+		wiper = wipers.create(0, 0, 'wiper');
+		
+
+        wiper.y = HEIGHT / 2 + wiper.height / 4;
+        wiper.x = (WIDTH / 2 - wiper.width / 2)  + 500;
+        
+        wiper.anchor.set(1, .5);
+        
+        wiper.body.collideWorldBounds = true;
+
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
 
     	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 1 });} catch(e){}
-    }
+    },
+    
+    update: function(){
+
+    	if (game.state.getCurrentState().key == 'Visher'){
+	    	if (!resetVisher && wiper.angle > 5 && wiper.angle < -5){
+	    		resetVisher = true;
+	    	}
+	    	
+	    	if (resetVisher){    	
+		    	if (wiper.angle.y < -25){
+					haSfx.play();
+					flashVisher('#ff00ff');	
+	    		}
+		    	
+		    	else if (wiper.angle.y > 25){    		
+    				huSfx.play();
+					flashVisher('#f0ff0f');
+				}	
+	    	}
+    	}
+	}
 };
 
 function readVisherAccel(acceleration){
-	if (game.state.getCurrentState().key == "Visher"){
-		visherAccelX = roundIt(acceleration.x);
-		
-		angleText.text = visherAccelX;
-		
-		if (resetSounds){
-			if (visherAccelX < -GO_NUM && !sound1.isPlaying && !sound2.isPlaying){
-				sound2.play();
-				flashVisher('#ff00ff');
-			}
-			else if (visherAccelX > GO_NUM && !sound1.isPlaying && !sound2.isPlaying){
-				sound1.play();
-				flashVisher('#f0ff0f');
-			}
-		}
-		
-		else{
-			if (visherAccelX < (GO_NUM / 3) && visherAccelX > -(GO_NUM / 3)){
-				resetSounds = true;
-				game.stage.backgroundColor = '#000000';
-			}
-		}
-	}
+	wiper.angle = acceleration.x;
+	angleText.text = roundIt(acceleration.x);
 }
 
 function flashVisher(_color){

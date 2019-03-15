@@ -1,6 +1,6 @@
 var gameMain = function(game){
 	notChosen = true;
-	FACTOR = 20;
+	FACTOR = 15;
 };
 
 gameMain.prototype = {

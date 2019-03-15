@@ -1,6 +1,6 @@
 var trombMain = function(game){
 	prev_reading = 0;
-	MIN_DIF = 1.8;
+	MIN_DIF = 1.9;
 };
 
 trombMain.prototype = {
