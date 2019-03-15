@@ -1,6 +1,6 @@
 var gameMain = function(game){
 	notChosen = true;
-	FACTOR = 30;
+	FACTOR = 20;
 };
 
 gameMain.prototype = {
@@ -13,20 +13,20 @@ gameMain.prototype = {
     	bg.alpha = 0.6;
     	
   		questionText = game.add.text(0, 0, 'What is your\nfavorite color?', 
-  		{font: '42px', fill: 'white', align:'center', fontWeight:'bold'});
+  		{font: '38px', fill: 'white', align:'center', fontWeight:'bold', stroke:'black', strokeThickness: 1});
 		questionText.x = game.world.centerX - questionText.width / 2;
 		questionText.y = questionText.height / 2;
 		
         option1Img = this.add.image(0, 0, 'red');
         option1Img.anchor.set(.5,.5);
         option1Img.scale.set(.5,.5);
-        option1Img.x = option1Img.width - 50;
+        option1Img.x = option1Img.width - 40;
     	option1Img.y = game.world.centerY - option1Img.height / 2 + 25;
 
         option2Img = this.add.image(0, 0, 'green');
         option2Img.anchor.set(.5,.5);
         option2Img.scale.set(.5,.5);
-        option2Img.x = WIDTH - option2Img.width + 50;
+        option2Img.x = WIDTH - option2Img.width + 40;
     	option2Img.y = game.world.centerY - option2Img.height / 2 + 25;
 
         button = this.add.sprite(0, 0, 'button');
@@ -93,7 +93,7 @@ function choose(_what){
 	button.inputEnabled = false;
 
 	setTimeout(function(){
-		game.add.tween(_what.scale).to({ x: 1.25, y: 1.25}, 3000, "Linear", true);
+		game.add.tween(_what.scale).to({ x: 0.75, y: 0.75}, 2750, "Linear", true);
 		
 		for(n=0; n<elements.length; n++){
 			if (elements[n] != _what){

@@ -12,7 +12,7 @@ trombMain.prototype = {
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
-    	game.add.image(100, 100, 'tromboneImg');
+    	trombImg = game.add.image(200, 100, 'tromboneImg');
     	
         angleText2 = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
 
@@ -28,11 +28,14 @@ function readTrombAccel(acceleration){
 		
 		if (Math.abs(accelY - prev_reading) > MIN_DIF && !trombSound.isPlaying){
 			trombSound.play();
-			game.stage.backgroundColor = '#004022';
+			
+			game.stage.backgroundColor = '#0245f0';
+			trombImg.tint = 0x00ffff;
 		}
 		
 		trombSound.onStop.add(function(){
 			game.stage.backgroundColor = '#0f5420';
+			trombImg.tint = 0xffffff;
 		});
 	
 		prev_reading = accelY;

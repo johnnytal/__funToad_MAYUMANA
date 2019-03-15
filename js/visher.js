@@ -9,7 +9,7 @@ visherMain.prototype = {
     create: function(){ 
     	game.stage.backgroundColor = '#ff4502';
     	
-    	game.add.image(100, 100, 'arrowsImg');
+    	game.add.image(350, 25, 'arrowsImg');
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
@@ -35,7 +35,7 @@ function readVisherAccel(acceleration){
 			}, 200);
 			
 			game.stage.backgroundColor = '#ff00ff';
-			navigator.vibrate(200);
+			navigator.vibrate(150);
 		}
 		else if (visherAccelX > GO_NUM && !sound1.isPlaying && resetSounds){
 			resetSounds = false;
@@ -47,7 +47,7 @@ function readVisherAccel(acceleration){
 			}, 200);
 			
 			game.stage.backgroundColor = '#f0ff0f';
-			navigator.vibrate(200);
+			navigator.vibrate(150);
 		}
 		
 		else if (visherAccelX < Math.floor(GO_NUM / 2) && visherAccelX > -(Math.floor(GO_NUM / 2))){

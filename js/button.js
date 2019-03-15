@@ -16,11 +16,14 @@ btnMain.prototype = {
     	bg.alpha = 0.6;
     	
     	createSoundBtns();
+    	
+    	game.input.addPointer();
 
         mode_button = this.add.image(0, 0, 'cont');
-        mode_button.scale.set(.5, .5);
+        mode_button.scale.set(.4, .4);
         mode_button.frame = 1;
         mode_button.y = HEIGHT - mode_button.height;
+        mode_button.x = WIDTH - mode_button.width - 50;
         
         mode_button.inputEnabled = true;
         mode_button.events.onInputDown.add(toggle_mode, this);  

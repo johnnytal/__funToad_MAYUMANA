@@ -84,11 +84,11 @@ function flash(_color){
 	if (_color == GENTLE_COLOR){
 		window.plugins.flashlight.switchOn();
 		circle.tint = 0xff00ff;
-		navigator.vibrate(200);
+		navigator.vibrate(150);
 	}
 	else{
 		circle.tint = 0xff00ff;
-		navigator.vibrate(100);
+		navigator.vibrate(75);
 	}
 
 	setTimeout(function(){
@@ -98,5 +98,5 @@ function flash(_color){
 		
 		circle.tint = 0xffffff;
 		game.stage.backgroundColor = '#000000';
-	}, 200);
+	}, 150);
 }
