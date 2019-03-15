@@ -68,8 +68,8 @@ shakerMain.prototype = {
 
 function deviceMotion(event){
 	
-	accelX = roundIt(event.acceleration.x);
-    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 20);
+	accelX = event.acceleration.x;
+    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 15);
 	//circle.body.velocity.y = accelX * accelFactor;
 }
 
