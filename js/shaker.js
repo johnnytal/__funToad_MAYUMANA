@@ -62,7 +62,7 @@ shakerMain.prototype = {
 
 function readAccel(acceleration){
 	accelX = acceleration.x;
-    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 8);
+    circle.y = HEIGHT / 2 - circle.height / 2 + (accelX * 6.375);
 }
 
 function handleOrientation(event){
