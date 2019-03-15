@@ -53,24 +53,3 @@ function readAccel(acceleration){
 		game.stage.backgroundColor = '#000000';
 	}
 }
-
-function initPlugIns(){
-	try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 5 });} catch(e){}
-
-    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
-    try{StatusBar.hide();} catch(e){} // hide status bar
-    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
-}
-
-function loadSounds(){
-	sound1 = game.add.audio('hu', 1, false);
-	sound2 = game.add.audio('ha', 1, false);
-}
-
-function roundIt(_num){
-	return Math.round(_num * 100) / 100;
-}
-
-function onError() {
-    alert('Sorry, No acceleration reading detected!');
-};

@@ -114,3 +114,15 @@ function UIbuttons(){
     document.getElementById("btnBtn").addEventListener('click', function(){ game.state.start("Buttons"); }); 
     document.getElementById("hotBtn").addEventListener('click', function(){ game.state.start("Hot"); }); 
 }
+
+function loadSounds(){
+	sound1 = game.add.audio('hu', 1, false);
+	sound2 = game.add.audio('ha', 1, false);
+	trombSound = game.add.audio('trombone', 1, false);
+	
+    sfx1 = game.add.audio('note1', 0.6);
+    sfx2 = game.add.audio('note2', 0.6);
+    sfx3 = game.add.audio('note3', 0.6);
+    
+    sounds = [sfx1, sfx2, sfx3];
+}

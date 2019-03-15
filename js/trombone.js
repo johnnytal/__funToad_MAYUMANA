@@ -15,8 +15,7 @@ trombMain.prototype = {
     	
         angleText = game.add.text(250, 50, "Play it!", {font: '32px', fill: 'white'});
 
-		initPlugIns();
-		loadSounds();
+		try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 2 });} catch(e){}
     }
 };
 
@@ -25,29 +24,13 @@ function readAccel(acceleration){
 	
 	angleText.text = accelY;
 	
-	if (Math.abs(accelY - prev_reading) > MIN_DIF && !sound1.isPlaying){
-		sound1.play();
+	if (Math.abs(accelY - prev_reading) > MIN_DIF && !trombSound.isPlaying){
+		trombSound.play();
 	}
 
 	prev_reading = accelY;
 }
 
-function initPlugIns(){
-	navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 5 });
-
-    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
-    try{StatusBar.hide();} catch(e){} // hide status bar
-    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
-}
-
-function loadSounds(){
-	sound1 = game.add.audio('trombone', 1, false);
-}
-
-function roundIt(_num){
-	return Math.round(_num * 100) / 100;
-}
-
-function onError() {
-    alert('Sorry, No acceleration reading detected!');
+function onError(err) {
+    alert('Error: ' + err);
 };
