@@ -1,10 +1,10 @@
 var visherMain = function(game){
 	resetSounds = true;
+	enough_time = true;
+	
 	visherAccelX = 0;
 	
 	GO_NUM = 7.5;
-	
-	enough_time = false;
 };
 
 visherMain.prototype = {
@@ -30,6 +30,7 @@ function readVisherAccel(acceleration){
 		if (resetSounds && enough_time){
 			if (visherAccelX < -7.5 && !sound1.isPlaying && !sound2.isPlaying){
 				resetSounds = false;
+				enough_time = false;
 				sound2.play();
 				window.plugins.flashlight.switchOn();
 				
@@ -46,6 +47,7 @@ function readVisherAccel(acceleration){
 			}
 			else if (visherAccelX > 7.5 && !sound1.isPlaying && !sound2.isPlaying){
 				resetSounds = false;
+				enough_time = false;
 				sound1.play();
 				window.plugins.flashlight.switchOn();
 				
