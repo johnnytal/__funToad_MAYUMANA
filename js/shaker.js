@@ -23,10 +23,10 @@ shakerMain.prototype = {
 		circles.physicsBodyType = Phaser.Physics.ARCADE;
 		
 		circle = circles.create(0, 0, 'red');
+		circle.scale.set(0.82, 0.82);
         circle.x = WIDTH / 2 - circle.width / 2;
         circle.y = HEIGHT / 2 - circle.height / 2;
-        circle.scale.set(0.82, 0.82);
- 
+
         circle.body.collideWorldBounds = true;
 
 		if (window.DeviceMotionEvent) {
