@@ -12,6 +12,7 @@ var shakerMain = function(game){
 shakerMain.prototype = {
     create: function(){
     	game.stage.backgroundColor = '#ffffff';
+    	sensFactor = 0;
     	
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
@@ -51,7 +52,7 @@ shakerMain.prototype = {
         	setTimeout(function(){minus.tint = 0xffffff;},100);
         }, this);
         
-        sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + sensFactor, 
+        sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
         {font: '22px', fill: 'white'});
         
         try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
