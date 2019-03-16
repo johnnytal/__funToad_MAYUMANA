@@ -17,6 +17,9 @@ preloader.prototype = {
         game.load.image('tromboneImg', "assets/images/trombone.png");
         
         game.load.image('wiper', "assets/images/wiper.png");
+        
+        game.load.image('plus', "assets/images/plus.png");
+        game.load.image('minus', "assets/images/minus.png");
 
         game.load.spritesheet("cont", "assets/images/cont.png", 325/2, 102);
         

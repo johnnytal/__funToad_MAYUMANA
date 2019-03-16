@@ -5,6 +5,8 @@ var shakerMain = function(game){
 	MIDDLE = null;
 
 	resetTouching = true;
+	
+	sensFactor = 0;
 };
 
 shakerMain.prototype = {
@@ -19,7 +21,7 @@ shakerMain.prototype = {
 		circles.physicsBodyType = Phaser.Physics.ARCADE;
 		
 		circle = circles.create(0, 0, 'red');
-		circle.scale.set(0.81, 0.81);
+		circle.scale.set(0.82, 0.82);
 
         circle.x = WIDTH / 2 - circle.width / 2;
         MIDDLE = HEIGHT / 2 - circle.height / 2;
@@ -27,22 +29,47 @@ shakerMain.prototype = {
 
         circle.body.collideWorldBounds = true;
         
+        plus = game.add.sprite(5, 300, 'plus');
+        plus.scale.set(.85, .85);
+        plus.alpha = 0.85;
+        plus.inputEnabled = true;
+        plus.events.onInputDown.add(function(){
+        	sensFactor += 0.05;
+        	sensText.text = "Sensitivity factor: " + roundIt(sensFactor);
+        	plus.tint = 0xf04030;
+        	setTimeout(function(){plus.tint = 0xffffff;},100);
+        }, this);
+        
+        minus = game.add.sprite(95, 300, 'minus');
+        minus.scale.set(.85, .85);
+        minus.alpha = 0.85;
+        minus.inputEnabled = true;
+        minus.events.onInputDown.add(function(){
+        	sensFactor -= 0.05;
+        	sensText.text = "Sensitivity factor: " + roundIt(sensFactor);
+        	minus.tint = 0xf04030;
+        	setTimeout(function(){minus.tint = 0xffffff;},100);
+        }, this);
+        
+        sensText = game.add.text(20, 270, "Sensitivity factor: " + sensFactor, 
+        {font: '18px', fill: 'darkgreen', fontWeight:'bold'});
+        
         try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
     },
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (!resetTouching && circle.y > 30 && circle.y < (HEIGHT - circle.height - 30)){
+	    	if (!resetTouching && circle.y > 25 && circle.y < (HEIGHT - circle.height - 25)){
 	    		resetTouching = true;
 	    	}
 	    	
 	    	if (resetTouching && !front.isPlaying && !back.isPlaying){    	
-		    	if (circle.y < 0.5){ // front
+		    	if (circle.y < 1){ // front
 		    		front.play();
 					flash(FRONT_COLOR);	
 	    		}
 		    	
-		    	else if (circle.y > HEIGHT - circle.height - 0.5){ // back    		
+		    	else if (circle.y > HEIGHT - circle.height - 1){ // back    		
 	    			back.play();
 					flash(BACK_COLOR);
 				}	
@@ -52,7 +79,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
-    circle.y = MIDDLE + (acceleration.x * 5.62);
+    circle.y = MIDDLE + (acceleration.x * (5.7 + sensFactor));
 }
 
 function flash(_color){
