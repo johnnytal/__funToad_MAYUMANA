@@ -61,7 +61,7 @@ function readVisherAccel(acceleration){
 
 function flashVisher(_color){
 	window.plugins.flashlight.switchOn();
-	navigator.vibrate(50);
+	setTimeout(function(){navigator.vibrate(35);}, 15);	
 	game.stage.backgroundColor = _color;
 	
 	resetVisher = false;

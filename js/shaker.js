@@ -29,30 +29,30 @@ shakerMain.prototype = {
 
         circle.body.collideWorldBounds = true;
         
-        plus = game.add.sprite(5, 300, 'plus');
+        plus = game.add.sprite(620, 300, 'plus');
         plus.scale.set(.85, .85);
         plus.alpha = 0.85;
         plus.inputEnabled = true;
         plus.events.onInputDown.add(function(){
         	sensFactor += 0.05;
-        	sensText.text = "Sensitivity factor: " + roundIt(sensFactor);
+        	sensText.text = "Sensitivity\nfactor: " + roundIt(sensFactor);
         	plus.tint = 0xf04030;
         	setTimeout(function(){plus.tint = 0xffffff;},100);
         }, this);
         
-        minus = game.add.sprite(95, 300, 'minus');
+        minus = game.add.sprite(525, 300, 'minus');
         minus.scale.set(.85, .85);
         minus.alpha = 0.85;
         minus.inputEnabled = true;
         minus.events.onInputDown.add(function(){
         	sensFactor -= 0.05;
-        	sensText.text = "Sensitivity factor: " + roundIt(sensFactor);
+        	sensText.text = "Sensitivity\nfactor: " + roundIt(sensFactor);
         	minus.tint = 0xf04030;
         	setTimeout(function(){minus.tint = 0xffffff;},100);
         }, this);
         
-        sensText = game.add.text(20, 270, "Sensitivity factor: " + sensFactor, 
-        {font: '18px', fill: 'darkgreen', fontWeight:'bold'});
+        sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + sensFactor, 
+        {font: '22px', fill: 'white'});
         
         try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
     },

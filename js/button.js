@@ -55,7 +55,7 @@ function playSound(item, kb){
     if (!sound.isPlaying){
         if (!sound.paused){
             sound.play();  
-            navigator.vibrate(250);  
+            navigator.vibrate(200);  
         }
         else{
             sound.resume();
