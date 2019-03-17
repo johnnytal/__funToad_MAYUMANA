@@ -65,9 +65,10 @@ shakerMain.prototype = {
         plusD.alpha = 0.85;
         plusD.inputEnabled = true;
         plusD.events.onInputDown.add(function(){
-        	distanceFactor += 0.5;
+        	distanceFactor += 0.01;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	plusD.tint = 0xf04030;
+        	circle.scale.set(0.82 + distanceFactor, 0.82 + distanceFactor);
         	setTimeout(function(){plusD.tint = 0xffffff;},100);
         }, this);
         
@@ -76,9 +77,10 @@ shakerMain.prototype = {
         minusD.alpha = 0.85;
         minusD.inputEnabled = true;
         minusD.events.onInputDown.add(function(){
-        	distanceFactor -= 0.5;
+        	distanceFactor -= 0.01;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	minusD.tint = 0xf04030;
+        	circle.scale.set(0.82 + distanceFactor, 0.82 + distanceFactor);
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
         }, this);
         
@@ -109,7 +111,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
-	if (circle.y < MIDDLE + (22 + distanceFactor) && circle.y > MIDDLE - (22 + distanceFactor)){
+	if (circle.y < MIDDLE + 22 && circle.y > MIDDLE - 22){
 		resetTouching = true;
 	}
 	    	
