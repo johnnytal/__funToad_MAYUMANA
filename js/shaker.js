@@ -65,7 +65,7 @@ shakerMain.prototype = {
         plusD.alpha = 0.85;
         plusD.inputEnabled = true;
         plusD.events.onInputDown.add(function(){
-        	distanceFactor++;
+        	distanceFactor += 0.5;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	plusD.tint = 0xf04030;
         	setTimeout(function(){plusD.tint = 0xffffff;},100);
@@ -76,7 +76,7 @@ shakerMain.prototype = {
         minusD.alpha = 0.85;
         minusD.inputEnabled = true;
         minusD.events.onInputDown.add(function(){
-        	distanceFactor--;
+        	distanceFactor -= 0.5;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	minusD.tint = 0xf04030;
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
@@ -93,17 +93,17 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (circle.y < MIDDLE + (23 + distanceFactor) && circle.y > MIDDLE - (23 + distanceFactor)){
+	    	if (circle.y < MIDDLE + (22 + distanceFactor) && circle.y > MIDDLE - (22 + distanceFactor)){
 	    		resetTouching = true;
 	    	}
 	    	
-	    	if (resetTouching && !front.isPlaying && !back.isPlaying){    	
-		    	if (circle.y < 1){ // front
+	    	if (resetTouching){    	
+		    	if (circle.y < 1 && !front.isPlaying){ // front
 		    		front.play();
 					flash(FRONT_COLOR);	
 	    		}
 		    	
-		    	else if (circle.y > HEIGHT - circle.height - 1){ // back    		
+		    	else if ((circle.y > HEIGHT - circle.height - 1) && !back.isPlaying) { // back    		
 	    			back.play();
 					flash(BACK_COLOR);
 				}	
@@ -114,17 +114,7 @@ shakerMain.prototype = {
 
 function readAccel(acceleration){
 	accelX = acceleration.x;
-    
-    circle.y = MIDDLE + (accelX * (5.7 + sensFactor) - 2);
-    
-  /*  if ((accelX < 0 && lastAccelX < 0) || (accelX > 0 && lastAccelX > 0)){
-    	resetAccel = false;
-    }
-    else{
-    	resetAccel = true;
-    }
-    
-    lastAccelX = accelX;*/
+    circle.y = (MIDDLE - 3) + (accelX * (4.9 + sensFactor));
 }
 
 function flash(_color){
