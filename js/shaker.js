@@ -76,7 +76,7 @@ shakerMain.prototype = {
         minusD.alpha = 0.85;
         minusD.inputEnabled = true;
         minusD.events.onInputDown.add(function(){
-        	distanceFactor -= 2;
+        	distanceFactor--;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	minusD.tint = 0xf04030;
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
@@ -93,7 +93,7 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (!resetTouching && circle.y > (25 + distanceFactor) && circle.y < (HEIGHT - circle.height - (25 + distanceFactor)) && resetAccel){
+	    	if (circle.y < MIDDLE + distanceFactor && circle.y > MIDDLE - distanceFactor){
 	    		resetTouching = true;
 	    	}
 	    	
