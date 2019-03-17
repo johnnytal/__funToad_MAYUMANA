@@ -92,11 +92,7 @@ shakerMain.prototype = {
     },
     
     update: function(){
-    	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (circle.y < MIDDLE + (22 + distanceFactor) && circle.y > MIDDLE - (22 + distanceFactor)){
-	    		resetTouching = true;
-	    	}
-	    	
+    	if (game.state.getCurrentState().key == 'Shaker'){	
 	    	if (resetTouching){    	
 		    	if (circle.y < 1 && !front.isPlaying){ // front
 		    		front.play();
@@ -113,8 +109,12 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
+	if (circle.y < MIDDLE + (22 + distanceFactor) && circle.y > MIDDLE - (22 + distanceFactor)){
+		resetTouching = true;
+	}
+	    	
 	accelX = acceleration.x;
-    circle.y = (MIDDLE - 3) + (accelX * (4.9 + sensFactor));
+    circle.y = MIDDLE + (accelX * (5.7 + sensFactor));
 }
 
 function flash(_color){
