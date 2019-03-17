@@ -81,18 +81,14 @@ function readAccel(acceleration){
 	
 	if (game.state.getCurrentState().key == 'Shaker'){		
 		if (resetTouching){    	
-	    	if (circle.y < 1 && !front.isPlaying){ // front
-	    		if (lastSound != 'front'){
-	    			front.play();
-					flash(FRONT_COLOR);	
-				}
+	    	if (lastSound != 'front' && circle.y < 1){ // front
+    			front.play();
+				flash(FRONT_COLOR);	
 			}
 	    	
-	    	else if ((circle.y > HEIGHT - circle.height - 1) && !back.isPlaying) { // back    		
-	    		if (lastSound != 'back'){
-					back.play();
-					flash(BACK_COLOR);
-				}
+	    	else if ((lastSound != 'back' && circle.y > HEIGHT - circle.height - 1)) { // back    		
+				back.play();
+				flash(BACK_COLOR);	
 			}	
 		}
 	}
