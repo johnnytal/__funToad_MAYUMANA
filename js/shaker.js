@@ -19,8 +19,7 @@ shakerMain.prototype = {
     	game.stage.backgroundColor = '#ffffff';
     	
     	sensFactor = 0;
-    	//distanceFactor = 0;
-    	
+
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
     	
@@ -58,33 +57,7 @@ shakerMain.prototype = {
         	minus.tint = 0xf04030;
         	setTimeout(function(){minus.tint = 0xffffff;},100);
         }, this);
-        
-      /*  plusD = game.add.sprite(620, 100, 'plus');
-        plusD.scale.set(.85, .85);
-        plusD.alpha = 0.85;
-        plusD.inputEnabled = true;
-        plusD.events.onInputDown.add(function(){
-        	distanceFactor += 0.5;
-        	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
-        	plusD.tint = 0xf04030;
-        	setTimeout(function(){plusD.tint = 0xffffff;},100);
-        }, this);
-        
-        minusD = game.add.sprite(525, 100, 'minus');
-        minusD.scale.set(.85, .85);
-        minusD.alpha = 0.85;
-        minusD.inputEnabled = true;
-        minusD.events.onInputDown.add(function(){
-        	distanceFactor -= 0.5;
-        	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
-        	minusD.tint = 0xf04030;
-        	setTimeout(function(){minusD.tint = 0xffffff;},100);
-        }, this);
-        
-        distanceText = game.add.text(530, 30, "Distance\nfactor: " + roundIt(distanceFactor),
-        {font: '22px', fill: 'black'});
-        */
-        
+
         sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
         {font: '22px', fill: 'white'});
 
@@ -92,18 +65,14 @@ shakerMain.prototype = {
     },
     
     update: function(){
-    	if (game.state.getCurrentState().key == 'Shaker'){	
-			if ((lastSound == 'front' && circle.y > MIDDLE + 35) || (lastSound == 'back' && circle.y < MIDDLE - 35)){
-				resetTouching = true;
-			}
-    	}
-    	
-    	if (resetTouching){
-    		game.stage.backgroundColor = '#000000';
-    	}
-    	else{
-    		game.stage.backgroundColor = '#ffffff';
-    	}
+    	if (game.state.getCurrentState().key == 'Shaker'){
+	    	if (resetTouching){
+	    		game.stage.backgroundColor = '#000000';
+	    	}
+	    	else{
+	    		game.stage.backgroundColor = '#ffffff';
+	    	}
+		}
 	}
 };
 
@@ -113,13 +82,17 @@ function readAccel(acceleration){
 	if (game.state.getCurrentState().key == 'Shaker'){		
 		if (resetTouching){    	
 	    	if (circle.y < 1 && !front.isPlaying){ // front
-	    		front.play();
-				flash(FRONT_COLOR);	
+	    		if (lastSound != 'front'){
+	    			front.play();
+					flash(FRONT_COLOR);	
+				}
 			}
 	    	
 	    	else if ((circle.y > HEIGHT - circle.height - 1) && !back.isPlaying) { // back    		
-				back.play();
-				flash(BACK_COLOR);
+	    		if (lastSound != 'back'){
+					back.play();
+					flash(BACK_COLOR);
+				}
 			}	
 		}
 	}
