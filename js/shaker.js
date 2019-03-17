@@ -7,8 +7,6 @@ var shakerMain = function(game){
 
 	sensFactor = 0;
 	distanceFactor = 0;
-	
-	resetTouching = true;
 };
 
 shakerMain.prototype = {
@@ -62,9 +60,10 @@ shakerMain.prototype = {
         plusD.alpha = 0.85;
         plusD.inputEnabled = true;
         plusD.events.onInputDown.add(function(){
-        	distanceFactor += 1;
+        	distanceFactor += 0.01;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	plusD.tint = 0xf04030;
+        	circle.scale.set(0.82 + distanceFactor);
         	setTimeout(function(){plusD.tint = 0xffffff;},100);
         }, this);
         
@@ -73,9 +72,10 @@ shakerMain.prototype = {
         minusD.alpha = 0.85;
         minusD.inputEnabled = true;
         minusD.events.onInputDown.add(function(){
-        	distanceFactor -= 1;
+        	distanceFactor -= 0.01;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	minusD.tint = 0xf04030;
+        	circle.scale.set(0.82 + distanceFactor);
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
         }, this);
 
@@ -91,18 +91,14 @@ shakerMain.prototype = {
 
 function readAccel(acceleration){	
     circle.y = MIDDLE + acceleration.x * (5.7 + sensFactor);
-    
-	if (circle.y > 23 && circle.y < HEIGHT - circle.height - 23){
-		resetTouching = true;
-	}
 	
 	if (game.state.getCurrentState().key == 'Shaker'){		 	
-    	if (resetTouching && lastSound != 'front' && circle.y < 1){ // front
+    	if (lastSound != 'front' && circle.y < 1){ // front
 			front.play();
 			flash(FRONT_COLOR);	
 		}
     	
-    	else if (resetTouching && (lastSound != 'back' && circle.y > HEIGHT - circle.height - 1)) { // back    		
+    	else if (lastSound != 'back' && circle.y > HEIGHT - circle.height - 1) { // back    		
 			back.play();
 			flash(BACK_COLOR);	
 		}	
@@ -110,8 +106,6 @@ function readAccel(acceleration){
 }
 
 function flash(_color){
-	resetTouching = false;
-	
 	game.stage.backgroundColor = _color;
 	circle.tint = 0xff00df;
 	
