@@ -7,12 +7,9 @@ var shakerMain = function(game){
 	resetTouching = true;
 	
 	sensFactor = 0;
-	distanceFactor = 0;
+	//distanceFactor = 0;
 	
 	resetAccel = true;
-	
-	lastAccelX = 0; 
-	accelX = 0;
 	
 	lastSound = null;
 };
@@ -22,7 +19,7 @@ shakerMain.prototype = {
     	game.stage.backgroundColor = '#ffffff';
     	
     	sensFactor = 0;
-    	distanceFactor = 0;
+    	//distanceFactor = 0;
     	
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
@@ -62,7 +59,7 @@ shakerMain.prototype = {
         	setTimeout(function(){minus.tint = 0xffffff;},100);
         }, this);
         
-        plusD = game.add.sprite(620, 100, 'plus');
+      /*  plusD = game.add.sprite(620, 100, 'plus');
         plusD.scale.set(.85, .85);
         plusD.alpha = 0.85;
         plusD.inputEnabled = true;
@@ -84,12 +81,13 @@ shakerMain.prototype = {
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
         }, this);
         
-        sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
-        {font: '22px', fill: 'white'});
-        
         distanceText = game.add.text(530, 30, "Distance\nfactor: " + roundIt(distanceFactor),
         {font: '22px', fill: 'black'});
+        */
         
+        sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
+        {font: '22px', fill: 'white'});
+
         try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
     },
     
@@ -122,9 +120,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){	
-	accelX = acceleration.x;
-	//if (Math.abs(accelX) > 5)
-    circle.y = MIDDLE + (accelX * (5.7 + sensFactor));
+    circle.y = MIDDLE + (acceleration.x * (6.2 + sensFactor));
 }
 
 function flash(_color){
@@ -135,11 +131,11 @@ function flash(_color){
 	
 	if (_color == FRONT_COLOR){
 		window.plugins.flashlight.switchOn();
-		navigator.vibrate(30);
+		setTimeout(function(){navigator.vibrate(25);}, 20);	
 		lastSound = 'front';
 	}
 	else{
-		navigator.vibrate(15);
+		setTimeout(function(){navigator.vibrate(12);}, 20);	
 		lastSound = 'back';
 	}
 
@@ -150,7 +146,7 @@ function flash(_color){
 		
 		circle.tint = 0xffffff;
 		game.stage.backgroundColor = '#000000';
-	}, 100);
+	}, 90);
 }
 
 function onError(){
