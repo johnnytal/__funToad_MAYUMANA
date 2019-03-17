@@ -85,7 +85,7 @@ function flash(_color){
 	resetTouching = false;
 	
 	game.stage.backgroundColor = _color;
-	circle.tint = 0xff00ff;
+	circle.tint = 0xff00df;
 	
 	if (_color == FRONT_COLOR){
 		window.plugins.flashlight.switchOn();
