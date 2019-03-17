@@ -6,6 +6,7 @@ var shakerMain = function(game){
 	lastSound = null;
 
 	sensFactor = 0;
+	distanceFactor = 0;
 	
 	resetTouching = true;
 };
@@ -15,6 +16,7 @@ shakerMain.prototype = {
     	game.stage.backgroundColor = '#ffffff';
     	
     	sensFactor = 0;
+    	distanceFactor = 0;
 
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
@@ -53,7 +55,33 @@ shakerMain.prototype = {
         	minus.tint = 0xf04030;
         	setTimeout(function(){minus.tint = 0xffffff;},100);
         }, this);
+        
+        
+        plusD = game.add.sprite(620, 100, 'plus');
+        plusD.scale.set(.85, .85);
+        plusD.alpha = 0.85;
+        plusD.inputEnabled = true;
+        plusD.events.onInputDown.add(function(){
+        	distanceFactor += 1;
+        	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
+        	plusD.tint = 0xf04030;
+        	setTimeout(function(){plusD.tint = 0xffffff;},100);
+        }, this);
+        
+        minusD = game.add.sprite(525, 100, 'minus');
+        minusD.scale.set(.85, .85);
+        minusD.alpha = 0.85;
+        minusD.inputEnabled = true;
+        minusD.events.onInputDown.add(function(){
+        	distanceFactor -= 1;
+        	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
+        	minusD.tint = 0xf04030;
+        	setTimeout(function(){minusD.tint = 0xffffff;},100);
+        }, this);
 
+        distanceText = game.add.text(530, 230, "Distance\nfactor: " + roundIt(distanceFactor), 
+        {font: '22px', fill: 'white'});
+        
         sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
         {font: '22px', fill: 'white'});
 
@@ -64,7 +92,7 @@ shakerMain.prototype = {
 function readAccel(acceleration){	
     circle.y = MIDDLE + acceleration.x * (6 + sensFactor);
     
-	if (circle.y > 22 && circle.y < HEIGHT - circle.height - 22){
+	if (circle.y > 23 && circle.y < HEIGHT - circle.height - 23){
 		resetTouching = true;
 	}
 	
