@@ -7,6 +7,11 @@ var shakerMain = function(game){
 	resetTouching = true;
 	
 	sensFactor = 0;
+	
+	resetAccel = true;
+	
+	lastAccelX = 0; 
+	accelX = 0;
 };
 
 shakerMain.prototype = {
@@ -55,18 +60,12 @@ shakerMain.prototype = {
         sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
         {font: '22px', fill: 'white'});
         
-		if (window.DeviceMotionEvent) {
-		  	window.addEventListener('devicemotion', readAccel);
-		}
-		else{
-			alert('motion not supported');
-		}
-        //try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
+        try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
     },
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (!resetTouching && circle.y > 25 && circle.y < (HEIGHT - circle.height - 25)){
+	    	if (!resetTouching && circle.y > 50 && circle.y < (HEIGHT - circle.height - 50) && resetAccel){
 	    		resetTouching = true;
 	    	}
 	    	
@@ -85,8 +84,19 @@ shakerMain.prototype = {
 	}
 };
 
-function readAccel(event){
-    circle.y = MIDDLE + (event.acceleration.x * (5.7 + sensFactor));
+function readAccel(acceleration){
+	accelX = acceleration.x;
+    
+    circle.y = MIDDLE + (acceleration.x * (5.7 + sensFactor) - 2);
+    
+    if ((accelX < 0 && lastAccelX < 0) || (accelX > 0 && lastAccelX > 0)){
+    	resetAccel = false;
+    }
+    else{
+    	resetAccel = true;
+    }
+    
+    lastAccelX = accelX;
 }
 
 function flash(_color){
