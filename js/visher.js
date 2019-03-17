@@ -4,6 +4,11 @@ var visherMain = function(game){
 	
 	HU_COLOR = '#ff00ff';
 	HA_COLOR = '#f0ff0f';
+	
+	accelX = 0;
+	lastAccelX = 0;
+	
+	resetAccel = true;
 };
 
 visherMain.prototype = {
@@ -42,7 +47,7 @@ visherMain.prototype = {
     update: function(){
 
     	if (game.state.getCurrentState().key == 'Visher'){
-	    	if (!resetVisher && wiper.angle < 50 && wiper.angle > - 50){
+	    	if (!resetVisher && wiper.angle < 50 && wiper.angle > - 50 && resetAccel){
 	    		resetVisher = true;
 	    	}
 	    	
@@ -62,8 +67,20 @@ visherMain.prototype = {
 };
 
 function readVisherAccel(event){
-	wiper.angle = event.acceleration.x * 2.7 - 2;
-	angleText.text = roundIt(event.acceleration.x);
+	accelX = event.acceleration.x;
+	wiper.angle = accelX * 2.7 - 2;
+	angleText.text = roundIt(accelX);
+	
+	if ((lastAccelX < 0 && accelX > 0) || (lastAccelX > 0 && accelX < 0)){	
+		resetAccel = true;
+	}
+	else if ((lastAccelX > 0 && accelX > 0)|| (lastAccelX < 0 && accelX < 0)){
+		resetAccel = false;
+	}
+	
+	lastAccelX = accelX;
+	
+	
 }
 
 function flashVisher(_color){
