@@ -42,7 +42,7 @@ visherMain.prototype = {
     update: function(){
 
     	if (game.state.getCurrentState().key == 'Visher'){
-	    	if (!resetVisher && wiper.angle < 20 && wiper.angle > - 20){
+	    	if (!resetVisher && wiper.angle < 50 && wiper.angle > - 50){
 	    		resetVisher = true;
 	    	}
 	    	
@@ -62,7 +62,7 @@ visherMain.prototype = {
 };
 
 function readVisherAccel(event){
-	wiper.angle = event.acceleration.x * 2.7;
+	wiper.angle = event.acceleration.x * 2.7 - 2;
 	angleText.text = roundIt(event.acceleration.x);
 }
 
