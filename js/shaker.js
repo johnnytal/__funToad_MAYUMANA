@@ -3,15 +3,9 @@ var shakerMain = function(game){
 	BACK_COLOR = '#656d7c';
 	
 	MIDDLE = null;
-
-	resetTouching = true;
-	
-	sensFactor = 0;
-	//distanceFactor = 0;
-	
-	resetAccel = true;
-	
 	lastSound = null;
+
+	sensFactor = 0;
 };
 
 shakerMain.prototype = {
@@ -62,41 +56,26 @@ shakerMain.prototype = {
         {font: '22px', fill: 'white'});
 
         try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
-    },
-    
-    update: function(){
-    	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (resetTouching){
-	    		game.stage.backgroundColor = '#000000';
-	    	}
-	    	else{
-	    		game.stage.backgroundColor = '#ffffff';
-	    	}
-		}
-	}
+    }
 };
 
 function readAccel(acceleration){	
     circle.y = MIDDLE + acceleration.x * (6 + sensFactor);
 	
-	if (game.state.getCurrentState().key == 'Shaker'){		
-		if (resetTouching){    	
-	    	if (lastSound != 'front' && circle.y < 1){ // front
-    			front.play();
-				flash(FRONT_COLOR);	
-			}
-	    	
-	    	else if ((lastSound != 'back' && circle.y > HEIGHT - circle.height - 1)) { // back    		
-				back.play();
-				flash(BACK_COLOR);	
-			}	
+	if (game.state.getCurrentState().key == 'Shaker'){		 	
+    	if (lastSound != 'front' && circle.y < 1){ // front
+			front.play();
+			flash(FRONT_COLOR);	
 		}
+    	
+    	else if ((lastSound != 'back' && circle.y > HEIGHT - circle.height - 1)) { // back    		
+			back.play();
+			flash(BACK_COLOR);	
+		}	
 	}
 }
 
 function flash(_color){
-	resetTouching = false;
-
 	game.stage.backgroundColor = _color;
 	circle.tint = 0xff00ff;
 	
