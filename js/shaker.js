@@ -79,8 +79,8 @@ shakerMain.prototype = {
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
         }, this);
 
-        distanceText = game.add.text(530, 230, "Distance\nfactor: " + roundIt(distanceFactor), 
-        {font: '22px', fill: 'white'});
+        distanceText = game.add.text(530, 30, "Distance\nfactor: " + roundIt(distanceFactor), 
+        {font: '22px', fill: 'black'});
         
         sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
         {font: '22px', fill: 'white'});
@@ -90,7 +90,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){	
-    circle.y = MIDDLE + acceleration.x * (6 + sensFactor);
+    circle.y = MIDDLE + acceleration.x * (5.7 + sensFactor);
     
 	if (circle.y > 23 && circle.y < HEIGHT - circle.height - 23){
 		resetTouching = true;
