@@ -7,6 +7,7 @@ var shakerMain = function(game){
 
 	sensFactor = 0;
 	distanceFactor = 0;
+	resetTouching = true;
 };
 
 shakerMain.prototype = {
@@ -91,21 +92,28 @@ shakerMain.prototype = {
 
 function readAccel(acceleration){	
     circle.y = MIDDLE + acceleration.x * (5.7 + sensFactor);
+    
+	if (!resetTouching && circle.y > 25 && circle.y < (HEIGHT - circle.height - 25)){
+		resetTouching = true;
+	}
 	
-	if (game.state.getCurrentState().key == 'Shaker'){		 	
-    	if (lastSound != 'front' && circle.y < 1){ // front
-			front.play();
-			flash(FRONT_COLOR);	
+	if (game.state.getCurrentState().key == 'Shaker'){	
+		if (resetTouching){	 	
+	    	if (lastSound != 'front' && circle.y < 1){ // front
+				front.play();
+				flash(FRONT_COLOR);	
+			}
+	    	
+	    	else if (lastSound != 'back' && circle.y > HEIGHT - circle.height - 1) { // back    		
+				back.play();
+				flash(BACK_COLOR);	
+			}	
 		}
-    	
-    	else if (lastSound != 'back' && circle.y > HEIGHT - circle.height - 1) { // back    		
-			back.play();
-			flash(BACK_COLOR);	
-		}	
 	}
 }
 
 function flash(_color){
+	resetTouching = false;
 	game.stage.backgroundColor = _color;
 	circle.tint = 0xff00df;
 	
