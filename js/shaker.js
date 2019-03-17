@@ -93,7 +93,7 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){	
-			if ((lastSound == 'front' && circle.y > MIDDLE) || (lastSound == 'back' && circle.y < MIDDLE)){
+			if ((lastSound == 'front' && circle.y > MIDDLE + 10) || (lastSound == 'back' && circle.y < MIDDLE - 10)){
 				resetTouching = true;
 			}
 			
@@ -120,7 +120,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){	
-    circle.y = MIDDLE + (acceleration.x * (6.2 + sensFactor));
+    circle.y = MIDDLE + ((acceleration.x + 1) * (6.2 + sensFactor));
 }
 
 function flash(_color){
