@@ -99,12 +99,12 @@ function readAccel(acceleration){
 	
 	if (game.state.getCurrentState().key == 'Shaker'){	
 		if (resetTouching){	 	
-	    	if (lastSound != 'front' && circle.y < 1){ // front
+	    	if (circle.y < 1){ // front
 				front.play();
 				flash(FRONT_COLOR);	
 			}
 	    	
-	    	else if (lastSound != 'back' && circle.y > HEIGHT - circle.height - 1) { // back    		
+	    	else if (circle.y > HEIGHT - circle.height - 1) { // back    		
 				back.play();
 				flash(BACK_COLOR);	
 			}	
