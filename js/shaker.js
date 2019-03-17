@@ -65,10 +65,9 @@ shakerMain.prototype = {
         plusD.alpha = 0.85;
         plusD.inputEnabled = true;
         plusD.events.onInputDown.add(function(){
-        	distanceFactor += 0.01;
+        	distanceFactor += 0.5;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	plusD.tint = 0xf04030;
-        	circle.scale.set(0.82 + distanceFactor, 0.82 + distanceFactor);
         	setTimeout(function(){plusD.tint = 0xffffff;},100);
         }, this);
         
@@ -77,10 +76,9 @@ shakerMain.prototype = {
         minusD.alpha = 0.85;
         minusD.inputEnabled = true;
         minusD.events.onInputDown.add(function(){
-        	distanceFactor -= 0.01;
+        	distanceFactor -= 0.5;
         	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
         	minusD.tint = 0xf04030;
-        	circle.scale.set(0.82 + distanceFactor, 0.82 + distanceFactor);
         	setTimeout(function(){minusD.tint = 0xffffff;},100);
         }, this);
         
@@ -96,12 +94,12 @@ shakerMain.prototype = {
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){	
 	    	if (resetTouching){    	
-		    	if (circle.y < 1 && !front.isPlaying){ // front
+		    	if (circle.y < 0.2 && !front.isPlaying){ // front
 		    		front.play();
 					flash(FRONT_COLOR);	
 	    		}
 		    	
-		    	else if ((circle.y > HEIGHT - circle.height - 1) && !back.isPlaying) { // back    		
+		    	else if ((circle.y > HEIGHT - circle.height - 0.2) && !back.isPlaying) { // back    		
 	    			back.play();
 					flash(BACK_COLOR);
 				}	
@@ -111,11 +109,12 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){
-	if (circle.y < MIDDLE + 22 && circle.y > MIDDLE - 22){
+	if (circle.y < MIDDLE + (22 + distanceFactor) && circle.y > MIDDLE - (22 + distanceFactor)){
 		resetTouching = true;
 	}
 	    	
 	accelX = acceleration.x;
+	//if (Math.abs(accelX) > 5)
     circle.y = MIDDLE + (accelX * (5.7 + sensFactor));
 }
 
@@ -128,9 +127,11 @@ function flash(_color){
 	if (_color == FRONT_COLOR){
 		window.plugins.flashlight.switchOn();
 		navigator.vibrate(30);
+		//freeze0 = true;
 	}
 	else{
 		navigator.vibrate(15);
+		//freeze1 = true;
 	}
 
 	setTimeout(function(){
