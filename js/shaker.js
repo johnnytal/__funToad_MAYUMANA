@@ -85,8 +85,8 @@ shakerMain.prototype = {
 	}
 };
 
-function readAccel(acceleration){
-    circle.y = MIDDLE + (acceleration.x * (5.7 + sensFactor));
+function readAccel(event){
+    circle.y = MIDDLE + (event.acceleration.x * (5.7 + sensFactor));
 }
 
 function flash(_color){

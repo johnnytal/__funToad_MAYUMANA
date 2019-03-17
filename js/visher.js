@@ -61,9 +61,9 @@ visherMain.prototype = {
 	}
 };
 
-function readVisherAccel(acceleration){
-	wiper.angle = acceleration.x * 2.7;
-	angleText.text = roundIt(acceleration.x);
+function readVisherAccel(event){
+	wiper.angle = event.acceleration.x * 2.7;
+	angleText.text = roundIt(event.acceleration.x);
 }
 
 function flashVisher(_color){
