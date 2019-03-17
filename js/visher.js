@@ -29,7 +29,14 @@ visherMain.prototype = {
     	
         angleText = game.add.text(250, 50, "Vish it!", {font: '32px', fill: 'white'});
 
-    	try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 1 });} catch(e){}
+		if (window.DeviceMotionEvent) {
+		  	window.addEventListener('devicemotion', readVisherAccel);
+		}
+		else{
+			alert('motion not supported');
+		}
+		
+    	//try{navigator.accelerometer.watchAcceleration(readVisherAccel, onError, { frequency: 1 });} catch(e){}
     },
     
     update: function(){

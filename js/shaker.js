@@ -55,7 +55,13 @@ shakerMain.prototype = {
         sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
         {font: '22px', fill: 'white'});
         
-        try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
+		if (window.DeviceMotionEvent) {
+		  	window.addEventListener('devicemotion', readAccel);
+		}
+		else{
+			alert('motion not supported');
+		}
+        //try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
     },
     
     update: function(){
