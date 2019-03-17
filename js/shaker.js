@@ -93,7 +93,7 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){	
-			if ((lastSound == 'front' && circle.y > MIDDLE + 20) || (lastSound == 'back' && circle.y < MIDDLE - 20)){
+			if ((lastSound == 'front' && circle.y > MIDDLE + 30) || (lastSound == 'back' && circle.y < MIDDLE - 30)){
 				resetTouching = true;
 			}
     	}
@@ -108,7 +108,7 @@ shakerMain.prototype = {
 };
 
 function readAccel(acceleration){	
-    circle.y = MIDDLE + ((acceleration.x + 1.2) * (6.5 + sensFactor));
+    circle.y = MIDDLE + acceleration.x * (5.7 + sensFactor);
 	
 	if (game.state.getCurrentState().key == 'Shaker'){		
 		if (resetTouching){    	
