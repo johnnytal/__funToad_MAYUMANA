@@ -93,7 +93,7 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){
-	    	if (!resetTouching && circle.y > 50 && circle.y < (HEIGHT - circle.height - 50) && resetAccel){
+	    	if (!resetTouching && circle.y > (25 + distanceFactor) && circle.y < (HEIGHT - circle.height - (25 + distanceFactor)) && resetAccel){
 	    		resetTouching = true;
 	    	}
 	    	
