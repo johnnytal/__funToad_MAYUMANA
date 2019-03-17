@@ -93,21 +93,10 @@ shakerMain.prototype = {
     
     update: function(){
     	if (game.state.getCurrentState().key == 'Shaker'){	
-			if ((lastSound == 'front' && circle.y > MIDDLE + 10) || (lastSound == 'back' && circle.y < MIDDLE - 10)){
+			if ((lastSound == 'front' && circle.y > MIDDLE + 15) || (lastSound == 'back' && circle.y < MIDDLE - 15)){
 				resetTouching = true;
 			}
-			
-	    	if (resetTouching){    	
-		    	if (circle.y < 1 && !front.isPlaying){ // front
-		    		front.play();
-					flash(FRONT_COLOR);	
-	    		}
-		    	
-		    	else if ((circle.y > HEIGHT - circle.height - 1) && !back.isPlaying) { // back    		
-	    			back.play();
-					flash(BACK_COLOR);
-				}	
-	    	}
+
     	}
     	
     	if (resetTouching){
@@ -121,6 +110,20 @@ shakerMain.prototype = {
 
 function readAccel(acceleration){	
     circle.y = MIDDLE + ((acceleration.x + 1) * (6.2 + sensFactor));
+	
+	if (game.state.getCurrentState().key == 'Shaker'){		
+		if (resetTouching){    	
+	    	if (circle.y < 1 && !front.isPlaying){ // front
+	    		front.play();
+				flash(FRONT_COLOR);	
+			}
+	    	
+	    	else if ((circle.y > HEIGHT - circle.height - 1) && !back.isPlaying) { // back    		
+				back.play();
+				flash(BACK_COLOR);
+			}	
+		}
+	}
 }
 
 function flash(_color){
@@ -146,7 +149,7 @@ function flash(_color){
 		
 		circle.tint = 0xffffff;
 		game.stage.backgroundColor = '#000000';
-	}, 90);
+	}, 75);
 }
 
 function onError(){
