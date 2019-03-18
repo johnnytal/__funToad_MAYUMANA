@@ -3,7 +3,6 @@ var shakerMain = function(game){
 	BACK_COLOR = '#656d7c';
 	
 	MIDDLE = null;
-	lastSound = null;
 
 	sensFactor = 0;
 	distanceFactor = 0;
@@ -120,11 +119,9 @@ function flash(_color){
 	if (_color == FRONT_COLOR){
 		window.plugins.flashlight.switchOn();
 		setTimeout(function(){navigator.vibrate(25);}, 20);	
-		lastSound = 'front';
 	}
 	else{
 		setTimeout(function(){navigator.vibrate(12);}, 20);	
-		lastSound = 'back';
 	}
 
 	setTimeout(function(){
