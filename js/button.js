@@ -1,9 +1,10 @@
 var btnMain = function(game){
-	pause_mode = false;
-
-	SOUND_BUTTONS_N = 3;
+	SOUND_BUTTONS_N = 3; // number of buttons (duh)
+	
+	gate_mode = false; 
+	stop_mode = true;
 	soundButtons = [];
-	colorBtns = ['red', 'green', 'blue'];
+	button_names = ['red_circle', 'green_circle', 'blue_circle'];
 };
 
 btnMain.prototype = {
@@ -12,9 +13,9 @@ btnMain.prototype = {
     	
     	bg = game.add.image(0, 0, 'bg');
     	bg.alpha = 0.6;
-    	
+
     	createSoundBtns();
-    	
+
     	game.input.addPointer();
 
         mode_button = this.add.image(0, 0, 'cont');
@@ -24,6 +25,12 @@ btnMain.prototype = {
         
         mode_button.inputEnabled = true;
         mode_button.events.onInputDown.add(toggle_mode, this);
+
+	    sfx1 = game.add.audio('note1', 1);
+	    sfx2 = game.add.audio('note2', 1);
+	    sfx3 = game.add.audio('note3', 1);
+	    
+	    sounds = [sfx1, sfx2, sfx3];
     }	
 };
 
@@ -31,24 +38,19 @@ function createSoundBtns(){
     soundBtnsGroup = game.add.physicsGroup(Phaser.Physics.ARCADE);
 	        
     for(b = 0; b < SOUND_BUTTONS_N; b++){
-    	soundButtons[b] = soundBtnsGroup.create(28 + (220 * b), 50, colorBtns[b]);
+    	soundButtons[b] = soundBtnsGroup.create(28 + (220 * b), 50, button_names[b]);
+    	soundButtons[b].scale.set(.6,.6);
     	soundButtons[b].inputEnabled = true;
 
 		soundButtons[b].events.onInputDown.add(playSound, this);
-		soundButtons[b].scale.set(.6, .6);
-		
         soundButtons[b].events.onInputUp.add(function(){
-            if (pause_mode) stopSounds();
+            if (gate_mode) stopSounds();
         }, this);  
     }
 }
 
-function playSound(item, kb){	
-	var place;
-
-	place = soundButtons.indexOf(item);
-	theButton = soundButtons[place];
-
+function playSound(item, kb){
+	var place = soundButtons.indexOf(item);
 	var sprite = soundButtons[place];
 	var sound = sounds[place];
 
@@ -71,7 +73,9 @@ function playSound(item, kb){
     }
     
     else{
-        sound.stop();
+    	if (stop_mode){
+        	sound.stop();
+        }
     }    
 }
 
@@ -84,22 +88,22 @@ function stopSounds(){
 function toggle_mode(item){
 	if (item.frame == 0){
 		item.frame = 1;
-		pause_mode = false;
+		gate_mode = false;
 	}	
 	else{
 		item.frame = 0;
-		pause_mode = true;
+		gate_mode = true;
 	}
+}
+
+function initPlugIns(){
+    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep device awake
+    try{StatusBar.hide();} catch(e){} // hide status bar
+    try{window.androidVolume.setMusic(100, false);} catch(e){} // change device media volume to maximum
 }
 
 function roundIt(_num){
 	return Math.round(_num * 100) / 100;
-}
-
-function initPlugIns(){
-    try{window.plugins.insomnia.keepAwake();} catch(e){} // keep awake
-    try{StatusBar.hide();} catch(e){} // hide status bar
-    try{window.androidVolume.setMusic(100, false);} catch(e){} // max media volume
 }
 
 function UIbuttons(){	    	
@@ -108,19 +112,4 @@ function UIbuttons(){
     document.getElementById("trombBtn").addEventListener('click', function(){ game.state.start("Trombone"); }); 
     document.getElementById("btnBtn").addEventListener('click', function(){ game.state.start("Buttons"); }); 
     document.getElementById("hotBtn").addEventListener('click', function(){ game.state.start("Hot"); }); 
-}
-
-function loadSounds(){
-	huSfx = game.add.audio('hu', 1);
-	haSfx = game.add.audio('ha', 1);
-	
-	trombSound = game.add.audio('trombone', 1);
-	
-    sfx1 = game.add.audio('note1', 0.5);
-    sfx2 = game.add.audio('note2', 0.5);
-    sfx3 = game.add.audio('note3', 0.5);
-    sounds = [sfx1, sfx2, sfx3];
-    
-    back = game.add.audio('back', 1);
-    front = game.add.audio('front', 1); 
 }

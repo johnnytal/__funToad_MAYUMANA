@@ -1,139 +1,96 @@
 var shakerMain = function(game){
-	FRONT_COLOR = '#c1ad65';
-	BACK_COLOR = '#656d7c';
-	
-	MIDDLE = null;
+	DEFAULT_COLOR = '#f7f7f7';
+	FRONT_COLOR = '#ff00ff';
+	BACK_COLOR = '#00ff00';	
+	LOGO_TINT = '0xff0000';
 
-	sensFactor = 0;
-	distanceFactor = 0;
-	resetTouching = true;
+	aveAccel = 0;
+	angle = 0;
+
+	lastAccel = 0;
+	lastAngle = 0;
+
+	MIN_ACCEL_F = 0.8;
+	MIN_ACCEL_B = 0.35;
+
+	MIN_ANGLE_F = 0.35;
+	MIN_ANGLE_B = 0;
+	
+	lastAction = '';
 };
 
 shakerMain.prototype = {
     create: function(){
-    	game.stage.backgroundColor = '#ffffff';
-    	
-    	sensFactor = 0;
-    	distanceFactor = 0;
-
-    	bg = game.add.image(0, 0, 'bg');
-    	bg.alpha = 0.6;
-    	
-        circles = game.add.group();
-		circles.enableBody = true;
-		circles.physicsBodyType = Phaser.Physics.ARCADE;
+		game.stage.backgroundColor = '#f7f7f7';
 		
-		circle = circles.create(0, 0, 'red');
-		circle.scale.set(0.82, 0.82);
+		bg = game.add.image(0, 0, 'bg');
+		bg.alpha = 0.5;
+		
+		logo = game.add.image(0, 0, 'green_circle');
+        logo.x = WIDTH / 2 - logo.width / 2;
+        logo.y =  HEIGHT / 2 - logo.height / 2;
 
-        circle.x = WIDTH / 2 - circle.width / 2;
-        MIDDLE = HEIGHT / 2 - circle.height / 2;
-        circle.y = MIDDLE;
+		backSfx = game.add.audio('back');
+		frontSfx = game.add.audio('front');
 
-        circle.body.collideWorldBounds = true;
-        
-        plus = game.add.sprite(620, 300, 'plus');
-        plus.scale.set(.85, .85);
-        plus.alpha = 0.85;
-        plus.inputEnabled = true;
-        plus.events.onInputDown.add(function(){
-        	sensFactor += 0.05;
-        	sensText.text = "Sensitivity\nfactor: " + roundIt(sensFactor);
-        	plus.tint = 0xf04030;
-        	setTimeout(function(){plus.tint = 0xffffff;},100);
-        }, this);
-        
-        minus = game.add.sprite(525, 300, 'minus');
-        minus.scale.set(.85, .85);
-        minus.alpha = 0.85;
-        minus.inputEnabled = true;
-        minus.events.onInputDown.add(function(){
-        	sensFactor -= 0.05;
-        	sensText.text = "Sensitivity\nfactor: " + roundIt(sensFactor);
-        	minus.tint = 0xf04030;
-        	setTimeout(function(){minus.tint = 0xffffff;},100);
-        }, this);
-        
-        
-        plusD = game.add.sprite(620, 100, 'plus');
-        plusD.scale.set(.85, .85);
-        plusD.alpha = 0.85;
-        plusD.inputEnabled = true;
-        plusD.events.onInputDown.add(function(){
-        	distanceFactor += 0.01;
-        	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
-        	plusD.tint = 0xf04030;
-        	circle.scale.set(0.82 + distanceFactor);
-        	setTimeout(function(){plusD.tint = 0xffffff;},100);
-        }, this);
-        
-        minusD = game.add.sprite(525, 100, 'minus');
-        minusD.scale.set(.85, .85);
-        minusD.alpha = 0.85;
-        minusD.inputEnabled = true;
-        minusD.events.onInputDown.add(function(){
-        	distanceFactor -= 0.01;
-        	distanceText.text = "Distance\nfactor: " + roundIt(distanceFactor);
-        	minusD.tint = 0xf04030;
-        	circle.scale.set(0.82 + distanceFactor);
-        	setTimeout(function(){minusD.tint = 0xffffff;},100);
-        }, this);
-
-        distanceText = game.add.text(530, 30, "Distance\nfactor: " + roundIt(distanceFactor), 
-        {font: '22px', fill: 'black'});
-        
-        sensText = game.add.text(530, 230, "Sensitivity\nfactor: " + roundIt(sensFactor), 
-        {font: '22px', fill: 'white'});
-
-        try{navigator.accelerometer.watchAcceleration(readAccel, onError, { frequency: 1});} catch(e){}
+		try{window.addEventListener('deviceorientation', function(){
+			angle = event.gamma;
+		});} catch(e){}
+		
+		try{window.addEventListener('devicemotion', readAcc);} catch(e){}
     }
 };
 
-function readAccel(acceleration){	
-    circle.y = MIDDLE + acceleration.x * (5.7 + sensFactor);
-    
-	if (!resetTouching && circle.y > 25 && circle.y < (HEIGHT - circle.height - 25)){
-		resetTouching = true;
-	}
+function readAcc(event){
+	if (game.state.getCurrentState().key == 'Shaker'){
+		var aveAccel = (
+			event.accelerationIncludingGravity.x + 
+			event.accelerationIncludingGravity.y +
+			event.accelerationIncludingGravity.z
+		) / 3;
 	
-	if (game.state.getCurrentState().key == 'Shaker'){	
-		if (resetTouching){	 	
-	    	if (circle.y < 1){ // front
-				front.play();
-				flash(FRONT_COLOR);	
+		if (!frontSfx.isPlaying && !backSfx.isPlaying){
+			if (Math.abs(lastAccel - aveAccel) > MIN_ACCEL_F && angle - lastAngle > MIN_ANGLE_F){ 
+				if (lastAction != 'FRONT'){
+					frontSfx.play();
+					flash(FRONT_COLOR);
+					
+					lastAction = 'FRONT';
+				}
 			}
-	    	
-	    	else if (circle.y > HEIGHT - circle.height - 1) { // back    		
-				back.play();
-				flash(BACK_COLOR);	
-			}	
+			
+			else if(Math.abs(lastAccel - aveAccel) > MIN_ACCEL_B && angle - lastAngle < MIN_ANGLE_B){	
+				if (lastAction != 'BACK'){
+					backSfx.play();
+					flash(BACK_COLOR);
+					
+					lastAction = 'BACK';
+				}
+			}
 		}
+		
+		lastAngle = angle;
+		lastAccel = aveAccel;
 	}
 }
 
 function flash(_color){
-	resetTouching = false;
-	game.stage.backgroundColor = _color;
-	circle.tint = 0xff00df;
-	
 	if (_color == FRONT_COLOR){
-		window.plugins.flashlight.switchOn();
-		setTimeout(function(){navigator.vibrate(25);}, 20);	
+		window.plugins.flashlight.switchOn();	
+		navigator.vibrate(60);
 	}
 	else{
-		setTimeout(function(){navigator.vibrate(12);}, 20);	
+		navigator.vibrate(40);
 	}
+	
+	game.stage.backgroundColor = _color;
+	logo.tint = LOGO_TINT;
 
-	setTimeout(function(){
+	setTimeout(function(){ // back to normal
 		if (window.plugins.flashlight.isSwitchedOn()){
 			window.plugins.flashlight.switchOff();
 		}
-		
-		circle.tint = 0xffffff;
-		game.stage.backgroundColor = '#000000';
-	}, 75);
-}
-
-function onError(){
-	alert('error');
+		game.stage.backgroundColor = DEFAULT_COLOR;
+		logo.tint = '0xffffff';
+	}, 60);
 }
